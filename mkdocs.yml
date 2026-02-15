@@ -1,6 +1,6 @@
-site_name: "How I Learn AI for Audio & Sound"
+site_name: "How to Learn AI for Audio & Sound"
 site_description: "A learning lab where I build, break, and explore generative AI applied to sound, music, and audio."
-site_url: https://yourusername.github.io/ai-audio-lab/
+site_url: https://my-sonicase.github.io/learn-gen-AI-audio/
 
 theme:
   name: material

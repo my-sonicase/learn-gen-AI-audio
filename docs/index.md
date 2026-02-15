@@ -1,7 +1,7 @@
-# 🔊 How I Learn AI for Audio & Sound
+# 🔊 How to Learn AI for Audio & Sound
 
 <p class="hero-subtitle">
-I believe the best way to actually learn AI is to build things. Follow a great course, sure, but then go implement stuff. Read a paper, then try to reproduce it. Break things. That's how it sticks. So this is my open lab where I do exactly that. The twist is that <strong>everything I build, I apply to sound, music, and audio</strong> (not speech). Even when a course teaches general deep learning, I always steer my projects toward generative soundscapes, procedural audio, and creative sonic experiments. If it doesn't make a sound, I'm not interested.
+Ciao! This is My Sonicase blog on how I learn AI for sound and audio. I believe the best way to actually learn AI is to build things. Follow a great course, and in the meantime go implement stuff. Read a paper, then try to reproduce it. Break things. That's how it sticks. So this is my open lab where I do exactly that. The twist is that <strong>everything I build, I apply to sound, music, and audio</strong>. Even when a course teaches general deep learning, I always steer my projects toward generative soundscapes, procedural audio, and creative sonic experiments. If it makes a sound, I'm happier and learn better. Let's go!
 </p>
 
 <div class="keywords">
@@ -60,7 +60,7 @@ Each tile links to a page where I document what I'm learning, the code I write, 
   <span class="card-icon">🌊</span>
   <span class="tag generative">Generative</span>
   <h3>Generative Audio Experiments</h3>
-  <p>My sandbox for diffusion based sound, neural synthesis, generative soundscapes, and procedural audio. Papers I read and then try to implement.</p>
+  <p>My sandbox for diffusion based sound, neural synthesis, generative soundscapes, and procedural audio. Projects I want to try, ideas I want to test.</p>
 </a>
 
 </div>
