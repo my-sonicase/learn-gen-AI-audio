@@ -1,0 +1,118 @@
+/* ── Category Colors ── */
+:root {
+  --color-foundational: #7c4dff;   /* deep purple */
+  --color-applied:      #00bfa5;   /* teal-green  */
+  --color-generative:   #ff6d00;   /* warm orange */
+  --color-research:     #448aff;   /* bright blue */
+}
+
+/* ── Grid ── */
+.grid-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+/* ── Card Base ── */
+.card {
+  background: var(--md-code-bg-color, #1e1e2e);
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-decoration: none !important;
+  color: var(--md-default-fg-color) !important;
+  transition: transform .2s ease, box-shadow .3s ease, border-color .3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+/* ── Glow per category ── */
+.card.foundational:hover {
+  box-shadow: 0 0 18px rgba(124, 77, 255, .45);
+  border-color: var(--color-foundational);
+}
+.card.applied:hover {
+  box-shadow: 0 0 18px rgba(0, 191, 165, .45);
+  border-color: var(--color-applied);
+}
+.card.generative:hover {
+  box-shadow: 0 0 18px rgba(255, 109, 0, .45);
+  border-color: var(--color-generative);
+}
+.card.research:hover {
+  box-shadow: 0 0 18px rgba(68, 138, 255, .45);
+  border-color: var(--color-research);
+}
+
+/* ── Icon badge ── */
+.card-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+/* ── Tag chip ── */
+.tag {
+  display: inline-block;
+  font-size: .7rem;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 6px;
+  width: fit-content;
+}
+.tag.foundational { background: rgba(124,77,255,.18); color: #b388ff; }
+.tag.applied      { background: rgba(0,191,165,.18);  color: #64ffda; }
+.tag.generative   { background: rgba(255,109,0,.18);  color: #ffab40; }
+.tag.research     { background: rgba(68,138,255,.18);  color: #82b1ff; }
+
+/* ── Card text ── */
+.card h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+.card p {
+  margin: 0;
+  font-size: .85rem;
+  opacity: .75;
+  line-height: 1.45;
+}
+
+/* ── Section heading ── */
+.section-label {
+  margin-top: 2.5rem;
+  margin-bottom: 0;
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  opacity: .5;
+}
+
+/* ── Hero area ── */
+.hero-subtitle {
+  font-size: 1.05rem;
+  max-width: 680px;
+  opacity: .8;
+  line-height: 1.6;
+}
+
+.keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  margin-top: .5rem;
+}
+.keywords span {
+  font-size: .72rem;
+  background: rgba(255,255,255,.06);
+  padding: 3px 10px;
+  border-radius: 20px;
+  opacity: .55;
+}
