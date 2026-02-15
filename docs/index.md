@@ -21,7 +21,7 @@ Each tile links to a page where I document what I'm learning, the code I write, 
 
 <p class="section-label">🧠 Foundational AI</p>
 
-<div class="grid-cards" markdown>
+<div class="grid-cards">
 
 <a class="card foundational" href="courses/fastai/">
   <span class="card-icon">🚀</span>
@@ -41,7 +41,7 @@ Each tile links to a page where I document what I'm learning, the code I write, 
 
 <p class="section-label">🎧 Applied AI for Audio</p>
 
-<div class="grid-cards" markdown>
+<div class="grid-cards">
 
 <a class="card applied" href="courses/hf-audio/">
   <span class="card-icon">🤗</span>
@@ -54,7 +54,7 @@ Each tile links to a page where I document what I'm learning, the code I write, 
 
 <p class="section-label">🎨 Generative & Creative AI</p>
 
-<div class="grid-cards" markdown>
+<div class="grid-cards">
 
 <a class="card generative" href="courses/gen-audio/">
   <span class="card-icon">🌊</span>
@@ -67,7 +67,7 @@ Each tile links to a page where I document what I'm learning, the code I write, 
 
 <p class="section-label">📄 Papers & Research</p>
 
-<div class="grid-cards" markdown>
+<div class="grid-cards">
 
 <a class="card research" href="papers/">
   <span class="card-icon">🔬</span>
