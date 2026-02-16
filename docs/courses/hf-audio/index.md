@@ -11,7 +11,7 @@ The <a href="https://huggingface.co/learn/audio-course">Hugging Face Audio Cours
 | Unit | Topic | Status |
 |------|-------|--------|
 | 1 | [Working with Audio Data](chapter1.md) | ✅ Done |
-| 2 | Audio classification | 🔲 |
+| 2 | [Audio Applications with Pipelines](chapter2.md) | ✅ Done |
 | 3 | Transformer architectures for audio | 🔲 |
 | 4 | Music & sound generation | 🔲 |
 
