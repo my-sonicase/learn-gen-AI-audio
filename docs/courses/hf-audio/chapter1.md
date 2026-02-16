@@ -12,16 +12,15 @@ Following the <a href="https://huggingface.co/learn/audio-course/en/chapter1/int
 
 Two files, two very different worlds. Thunder is broadband noise, energy smeared everywhere. Chimes are tonal, with clear harmonic peaks. Before we even plot anything, just listen.
 
-### Original sample rate vs 16 kHz
+### Original vs 16 kHz
 
-The originals were recorded at 96 kHz (thunder) and 192 kHz (chimes). Professional quality, way more than what ML models need. We resample to 16 kHz because that's what most audio models expect (Whisper, Wav2Vec2, etc). You lose some high frequency detail but classification still works great. Listen to both and see if you can hear the difference:
+The originals were recorded at 96 kHz (thunder) and 192 kHz (chimes). For the blog I've converted them to 48 kHz MP3, which is still way more than what ML models need. We resample to 16 kHz because that's what most audio models expect (Whisper, Wav2Vec2, etc). Listen to both and see if you can hear the difference:
 
 **🌧️ Thunder / Rain / Cicadas, Ubud, Indonesia**
 
-Original (96 kHz):
+Original (48 kHz MP3):
 <audio controls>
   <source src="audio/thunder_original.mp3" type="audio/mpeg">
-  <source src="audio/thunder_original.wav" type="audio/wav">
 </audio>
 
 Resampled (16 kHz):
@@ -32,10 +31,9 @@ Resampled (16 kHz):
 
 **🔔 Musical Chimes, Georgia**
 
-Original (192 kHz):
+Original (48 kHz MP3):
 <audio controls>
   <source src="audio/chimes_original.mp3" type="audio/mpeg">
-  <source src="audio/chimes_original.wav" type="audio/wav">
 </audio>
 
 Resampled (16 kHz):
