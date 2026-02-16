@@ -4,7 +4,7 @@
 Following the <a href="https://huggingface.co/learn/audio-course/en/chapter1/introduction">Hugging Face Audio Course, Unit 1</a>, but instead of speech I'm using soundscapes. Two sounds from the Free to Use Sounds library: <strong>thunder/rain/cicadas</strong> recorded in Ubud, Indonesia, and <strong>musical chimes</strong> recorded in Georgia. These have very different spectral signatures and that's what makes them fun to compare.
 </p>
 
-📓 **[Full notebook on GitHub](../../../notebooks/chapter1_audio_fundamentals.ipynb)**
+📓 **[Full notebook on GitHub](https://github.com/my-sonicase/learn-gen-AI-audio/blob/main/notebooks/chapter1_audio_fundamentals.ipynb)**
 
 ---
 
@@ -20,11 +20,13 @@ The originals were recorded at 96 kHz (thunder) and 192 kHz (chimes). Profession
 
 Original (96 kHz):
 <audio controls>
+  <source src="audio/thunder_original.mp3" type="audio/mpeg">
   <source src="audio/thunder_original.wav" type="audio/wav">
 </audio>
 
 Resampled (16 kHz):
 <audio controls>
+  <source src="audio/thunder_16khz.mp3" type="audio/mpeg">
   <source src="audio/thunder_16khz.wav" type="audio/wav">
 </audio>
 
@@ -32,11 +34,13 @@ Resampled (16 kHz):
 
 Original (192 kHz):
 <audio controls>
+  <source src="audio/chimes_original.mp3" type="audio/mpeg">
   <source src="audio/chimes_original.wav" type="audio/wav">
 </audio>
 
 Resampled (16 kHz):
 <audio controls>
+  <source src="audio/chimes_16khz.mp3" type="audio/mpeg">
   <source src="audio/chimes_16khz.wav" type="audio/wav">
 </audio>
 
@@ -182,26 +186,31 @@ The bold ones are the categories closest to our own sounds. Let's listen to a fe
 
 **🌧️ Rain (ESC 50)**
 <audio controls>
+  <source src="audio/esc50_rain.mp3" type="audio/mpeg">
   <source src="audio/esc50_rain.wav" type="audio/wav">
 </audio>
 
 **⛈️ Thunderstorm (ESC 50)**
 <audio controls>
+  <source src="audio/esc50_thunderstorm.mp3" type="audio/mpeg">
   <source src="audio/esc50_thunderstorm.wav" type="audio/wav">
 </audio>
 
 **🌊 Sea Waves (ESC 50)**
 <audio controls>
+  <source src="audio/esc50_sea_waves.mp3" type="audio/mpeg">
   <source src="audio/esc50_sea_waves.wav" type="audio/wav">
 </audio>
 
 **🔔 Church Bells (ESC 50)**
 <audio controls>
+  <source src="audio/esc50_church_bells.mp3" type="audio/mpeg">
   <source src="audio/esc50_church_bells.wav" type="audio/wav">
 </audio>
 
 **💨 Wind (ESC 50)**
 <audio controls>
+  <source src="audio/esc50_wind.mp3" type="audio/mpeg">
   <source src="audio/esc50_wind.wav" type="audio/wav">
 </audio>
 
@@ -305,4 +314,4 @@ The key insight from comparing thunder/rain and chimes: they look very different
 
 The whole pipeline goes: raw audio → resample to 16 kHz → feature extractor → log mel spectrogram → model. Understanding each step makes everything that comes next in the course make more sense.
 
-📓 **[Full notebook with all the code](../../../notebooks/chapter1_audio_fundamentals.ipynb)**
+📓 **[Full notebook with all the code](https://github.com/my-sonicase/learn-gen-AI-audio/blob/main/notebooks/chapter1_audio_fundamentals.ipynb)**
