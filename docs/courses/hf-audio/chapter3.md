@@ -158,6 +158,5 @@ Thunder/rain has continuous energy spread across the clip, so attention is distr
 
 The big takeaway: these models build up increasingly abstract representations of audio through their layers. The attention visualizations make the theory from the HF course concrete. You can actually see the model learning to connect distant parts of a rain recording, or focusing on the transient attacks of chimes.
 
-Next up: Chapter 4, where we fine tune our own audio classifier on environmental sounds.
 
 📓 **[Full notebook with all the code](https://github.com/my-sonicase/learn-gen-AI-audio/blob/main/notebooks/chapter3_inside_audio_transformers.ipynb)**

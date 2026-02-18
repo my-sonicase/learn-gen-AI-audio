@@ -23,6 +23,13 @@ Each tile links to a page where I document what I'm learning, the code I write, 
 
 <div class="grid-cards">
 
+<a class="card foundational" href="courses/karpathy/">
+  <span class="card-icon">🧪</span>
+  <span class="tag foundational">Foundational</span>
+  <h3>Karpathy · Neural Networks: Zero to Hero</h3>
+  <p>Build GPT from scratch, character by character. The concepts (tokenization, embeddings, self attention, autoregressive generation) are exactly what powers MusicGen and AudioLM. Where I can, I swap text for audio tokens.</p>
+</a>
+
 <a class="card foundational" href="courses/fastai/">
   <span class="card-icon">🚀</span>
   <span class="tag foundational">Foundational</span>
