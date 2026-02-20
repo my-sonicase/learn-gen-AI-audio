@@ -13,7 +13,7 @@ Following the <a href="https://huggingface.co/learn/audio-course/en/chapter4/int
 I deployed the ESC 50 classifier as a Gradio demo on Hugging Face Spaces. Record or upload any sound and see what the model thinks it is:
 
 <iframe
-  src="https://huggingface.co/spaces/sonicase/DistilHuBERT-audio-classifier-demo"
+  src="https://sonicase-distilhubert-audio-classifier-demo.hf.space"
   frameborder="0"
   width="100%"
   height="600"
