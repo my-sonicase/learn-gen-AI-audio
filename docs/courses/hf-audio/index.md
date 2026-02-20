@@ -13,7 +13,8 @@ The <a href="https://huggingface.co/learn/audio-course">Hugging Face Audio Cours
 | 1 | [Working with Audio Data](chapter1.md) | ✅ Done |
 | 2 | [Audio Applications with Pipelines](chapter2.md) | ✅ Done |
 | 3 | [Inside Audio Transformers](chapter3.md) | ✅ Done |
-| 4 | Music & sound generation | 🔲 |
+| 4 | [Fine Tuning Audio Classifiers](chapter4.md) | ✅ Done |
+| 5 | Automatic Speech Recognition | 🔲 |
 
 ---
 
