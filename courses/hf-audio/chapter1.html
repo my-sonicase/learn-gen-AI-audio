@@ -1,0 +1,1530 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A learning lab where I build, break, and explore generative AI applied to sound, music, and audio.">
+      
+      
+      
+        <link rel="canonical" href="https://my-sonicase.github.io/learn-gen-AI-audio/courses/hf-audio/chapter1.html">
+      
+      
+        <link rel="prev" href="index.html">
+      
+      
+        <link rel="next" href="chapter2.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+    
+    
+      
+        <title>Chapter 1: Working with Audio Data - How to Learn AI for Audio & Sound</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-1-working-with-audio-data" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="How to Learn AI for Audio &amp; Sound" class="md-header__button md-logo" aria-label="How to Learn AI for Audio & Sound" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m22 12-2 1-1 1-1-1-1 3-1-3-1 8-1-8-1 2-1-2-1 4-1-4-1 9-1-9-1 6-1-6-1 1-1-1-2-1 2-1 1-1 1 1 1-6 1 6 1-9 1 9 1-4 1 4 1-2 1 2 1-8 1 8 1-3 1 3 1-1 1 1z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            How to Learn AI for Audio & Sound
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter 1: Working with Audio Data
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../index.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  🔊 How to Learn AI for Audio &amp; Sound
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../deeplearning-ai.html" class="md-tabs__link">
+          
+  
+  
+  Courses
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="How to Learn AI for Audio &amp; Sound" class="md-nav__button md-logo" aria-label="How to Learn AI for Audio & Sound" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m22 12-2 1-1 1-1-1-1 3-1-3-1 8-1-8-1 2-1-2-1 4-1-4-1 9-1-9-1 6-1-6-1 1-1-1-2-1 2-1 1-1 1 1 1-6 1 6 1-9 1 9 1-4 1 4 1-2 1 2 1-8 1 8 1-3 1 3 1-1 1 1z"/></svg>
+
+    </a>
+    How to Learn AI for Audio & Sound
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔊 How to Learn AI for Audio &amp; Sound
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Courses
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Courses
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deeplearning-ai.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📐 Andrew Ng · Deep Learning Specialization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fastai.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🚀 fast.ai · Practical Deep Learning for Coders
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gen-audio.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🌊 Generative Audio Experiments
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../karpathy.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🧪 Karpathy · Neural Networks: Zero to Hero
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hf audio
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Hf audio
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🤗 Hugging Face Audio Course
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 1: Working with Audio Data
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="chapter1.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 1: Working with Audio Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-sounds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The sounds
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The sounds">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#original-vs-16-khz" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Original vs 16 kHz
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#loading-and-inspecting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Loading and inspecting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Loading and inspecting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-sampling-rate-really" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is sampling rate, really?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#waveforms-the-time-domain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Waveforms: the time domain
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#frequency-spectrum-fft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Frequency spectrum (FFT)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#spectrogram-stft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Spectrogram (STFT)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mel-spectrogram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mel spectrogram
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#all-four-views-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        All four views together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#esc-50-an-environmental-sound-dataset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ESC 50: an environmental sound dataset
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ESC 50: an environmental sound dataset">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#all-50-categories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        All 50 categories
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#esc-50-rain-vs-our-thunder-recording" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ESC 50 rain vs our thunder recording
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preprocessing-resampling-with-cast_column" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preprocessing: resampling with cast_column
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#feature-extraction-with-whisper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Feature extraction with Whisper
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#streaming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Streaming
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-i-learned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What I learned
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="chapter2.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 2: Audio Applications with Pipelines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="chapter3.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 3: Inside Audio Transformers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="chapter4.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 4: Fine Tuning Audio Classifiers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-sounds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The sounds
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The sounds">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#original-vs-16-khz" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Original vs 16 kHz
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#loading-and-inspecting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Loading and inspecting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Loading and inspecting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-sampling-rate-really" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is sampling rate, really?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#waveforms-the-time-domain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Waveforms: the time domain
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#frequency-spectrum-fft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Frequency spectrum (FFT)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#spectrogram-stft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Spectrogram (STFT)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mel-spectrogram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mel spectrogram
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#all-four-views-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        All four views together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#esc-50-an-environmental-sound-dataset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ESC 50: an environmental sound dataset
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ESC 50: an environmental sound dataset">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#all-50-categories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        All 50 categories
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#esc-50-rain-vs-our-thunder-recording" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ESC 50 rain vs our thunder recording
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preprocessing-resampling-with-cast_column" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preprocessing: resampling with cast_column
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#feature-extraction-with-whisper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Feature extraction with Whisper
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#streaming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Streaming
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-i-learned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What I learned
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="chapter-1-working-with-audio-data">Chapter 1: Working with Audio Data</h1>
+<p class="hero-subtitle">
+Following the <a href="https://huggingface.co/learn/audio-course/en/chapter1/introduction">Hugging Face Audio Course, Unit 1</a>, but instead of speech I'm using soundscapes. Two sounds from the Free to Use Sounds library: <strong>thunder/rain/cicadas</strong> recorded in Ubud, Indonesia, and <strong>musical chimes</strong> recorded in Georgia. These have very different spectral signatures and that's what makes them fun to compare.
+</p>
+
+<p>📓 <strong><a href="https://github.com/my-sonicase/learn-gen-AI-audio/blob/main/notebooks/chapter1_audio_fundamentals.ipynb">Full notebook on GitHub</a></strong></p>
+<hr />
+<h2 id="the-sounds">The sounds</h2>
+<p>Two files, two very different worlds. Thunder is broadband noise, energy smeared everywhere. Chimes are tonal, with clear harmonic peaks. Before we even plot anything, just listen.</p>
+<h3 id="original-vs-16-khz">Original vs 16 kHz</h3>
+<p>The originals were recorded at 96 kHz (thunder) and 192 kHz (chimes). For the blog I've converted them to 48 kHz MP3, which is still way more than what ML models need. We resample to 16 kHz because that's what most audio models expect (Whisper, Wav2Vec2, etc). Listen to both and see if you can hear the difference:</p>
+<p><strong>🌧️ Thunder / Rain / Cicadas, Ubud, Indonesia</strong></p>
+<p>Original (48 kHz MP3):
+<audio controls>
+  <source src="audio/thunder_original.mp3" type="audio/mpeg">
+</audio></p>
+<p>Resampled (16 kHz):
+<audio controls>
+  <source src="audio/thunder_16khz.mp3" type="audio/mpeg">
+  <source src="audio/thunder_16khz.wav" type="audio/wav">
+</audio></p>
+<p><strong>🔔 Musical Chimes, Georgia</strong></p>
+<p>Original (48 kHz MP3):
+<audio controls>
+  <source src="audio/chimes_original.mp3" type="audio/mpeg">
+</audio></p>
+<p>Resampled (16 kHz):
+<audio controls>
+  <source src="audio/chimes_16khz.mp3" type="audio/mpeg">
+  <source src="audio/chimes_16khz.wav" type="audio/wav">
+</audio></p>
+<p>The 16 kHz versions sound a bit duller, especially in the high end. The chimes lose some of their shimmer. But for an ML model doing classification? More than enough information.</p>
+<hr />
+<h2 id="loading-and-inspecting">Loading and inspecting</h2>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">librosa</span>
+
+<span class="c1"># Load at native sample rate first</span>
+<span class="n">thunder_native</span><span class="p">,</span> <span class="n">sr_thunder</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;thunder.wav&quot;</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mono</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">chimes_native</span><span class="p">,</span> <span class="n">sr_chimes</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;chimes.wav&quot;</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mono</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Then resample to 16 kHz for ML</span>
+<span class="n">SR</span> <span class="o">=</span> <span class="mi">16000</span>
+<span class="n">thunder</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">thunder_original</span><span class="p">,</span> <span class="n">orig_sr</span><span class="o">=</span><span class="n">sr_thunder</span><span class="p">,</span> <span class="n">target_sr</span><span class="o">=</span><span class="n">SR</span><span class="p">)</span>
+<span class="n">chimes</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">chimes_original</span><span class="p">,</span> <span class="n">orig_sr</span><span class="o">=</span><span class="n">sr_chimes</span><span class="p">,</span> <span class="n">target_sr</span><span class="o">=</span><span class="n">SR</span><span class="p">)</span>
+</code></pre></div>
+<p>A few things about the raw files. 96 kHz and 192 kHz sample rates, stereo channels, PCM_24 and FLOAT encodings. These come from a professional sound library. <code>librosa.load()</code> handles all the conversion: mixes to mono, resamples, normalizes to float32. One line and you're done.</p>
+<h3 id="what-is-sampling-rate-really">What is sampling rate, really?</h3>
+<p>The sampling rate is how many times per second the continuous sound wave was measured. At 96,000 Hz, we captured 96,000 snapshots per second. The Nyquist theorem says this lets us faithfully represent frequencies up to half the sampling rate (48 kHz for 96 kHz SR). Human hearing tops out at ~20 kHz, so 96 kHz is overkill for most purposes. For ML models, 16 kHz is standard, enough to capture everything below 8 kHz.</p>
+<hr />
+<h2 id="waveforms-the-time-domain">Waveforms: the time domain</h2>
+<p>A waveform shows amplitude over time. Each point is one sample. It tells you <em>when</em> things happen and how loud they are, but nothing about <em>which frequencies</em> are present.</p>
+<div class="highlight"><pre><span></span><code><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">librosa</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">waveshow</span><span class="p">(</span><span class="n">thunder</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">SR</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;steelblue&#39;</span><span class="p">)</span>
+<span class="n">librosa</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">waveshow</span><span class="p">(</span><span class="n">chimes</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">SR</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;coral&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p><img alt="Waveforms" src="images/waveforms.png" /></p>
+<p>Thunder/rain has relatively constant amplitude with occasional spikes (thunder claps, heavy drips). The rain creates a continuous "bed" of sound. Chimes show clear attacks when each chime is struck, followed by decay as the tone fades out. The silence between strikes is visible. Already very different, but the waveform doesn't tell us what frequencies make up each sound.</p>
+<hr />
+<h2 id="frequency-spectrum-fft">Frequency spectrum (FFT)</h2>
+<p>The Discrete Fourier Transform converts a signal from time domain to frequency domain. It answers: which frequencies are present, and how strong are they? We use the FFT (Fast Fourier Transform), which is just an efficient algorithm for computing the DFT. We take a short window of each sound (4096 samples ≈ 0.25s at 16 kHz) and look at its spectrum.</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">plot_spectrum</span><span class="p">(</span><span class="n">signal</span><span class="p">,</span> <span class="n">sr</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;steelblue&#39;</span><span class="p">,</span> <span class="n">n_fft</span><span class="o">=</span><span class="mi">4096</span><span class="p">):</span>
+    <span class="n">chunk</span> <span class="o">=</span> <span class="n">signal</span><span class="p">[:</span><span class="n">n_fft</span><span class="p">]</span>
+    <span class="n">window</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hanning</span><span class="p">(</span><span class="n">n_fft</span><span class="p">)</span>  <span class="c1"># smooths edges, avoids spectral leakage</span>
+    <span class="n">spectrum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfft</span><span class="p">(</span><span class="n">chunk</span> <span class="o">*</span> <span class="n">window</span><span class="p">))</span>
+    <span class="n">freqs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfftfreq</span><span class="p">(</span><span class="n">n_fft</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="n">sr</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">freqs</span><span class="p">,</span> <span class="mi">20</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">spectrum</span> <span class="o">+</span> <span class="mf">1e-10</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+</code></pre></div>
+<p><img alt="FFT Spectrum" src="images/fft_spectrum.png" /></p>
+<p>Thunder/rain: energy spread across many frequencies. This is what "broadband noise" looks like. Rain is essentially random fluctuations across the whole spectrum. Chimes: distinct peaks at specific frequencies, the fundamentals and harmonics of each chime. This is why frequency analysis is powerful. Two sounds that look similar as waveforms become clearly distinguishable in the frequency domain.</p>
+<p>But there's a problem: the FFT gives us frequencies for one fixed window of time. What if we want to see how frequencies change over time?</p>
+<hr />
+<h2 id="spectrogram-stft">Spectrogram (STFT)</h2>
+<p>A spectrogram is what you get when you compute many FFTs on overlapping windows across the whole signal, then stack them side by side. X axis is time, Y axis is frequency, color is amplitude. The algorithm is called the Short Time Fourier Transform (STFT).</p>
+<div class="highlight"><pre><span></span><code><span class="n">D</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">stft</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
+<span class="n">S_db</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">amplitude_to_db</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">D</span><span class="p">),</span> <span class="n">ref</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">)</span>
+<span class="n">librosa</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">specshow</span><span class="p">(</span><span class="n">S_db</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">SR</span><span class="p">,</span> <span class="n">x_axis</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="n">y_axis</span><span class="o">=</span><span class="s1">&#39;hz&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p><img alt="Spectrograms" src="images/spectrograms.png" /></p>
+<p>Now we can see time AND frequency together. Thunder/rain: energy smeared across all frequencies over time, with bright vertical bands where thunder claps happen (sudden broadband energy). Chimes: horizontal lines (sustained tones at specific frequencies) that appear when a chime is struck and fade out. This is why spectrograms are the go to input for many audio ML models. They're basically "images" of sound.</p>
+<hr />
+<h2 id="mel-spectrogram">Mel spectrogram</h2>
+<p>This is what most ML models actually use. Whisper takes a log mel spectrogram as input. The idea: our ears don't perceive frequencies linearly. The difference between 100 Hz and 200 Hz sounds huge, but 8000 Hz vs 8100 Hz is barely noticeable. The mel scale warps the frequency axis to match human perception: more resolution at low frequencies, less at high frequencies.</p>
+<div class="highlight"><pre><span></span><code><span class="n">S</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">melspectrogram</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">signal</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">SR</span><span class="p">,</span> <span class="n">n_mels</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">fmax</span><span class="o">=</span><span class="mi">8000</span><span class="p">)</span>
+<span class="n">S_db</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">power_to_db</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">ref</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">)</span>
+<span class="n">librosa</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">specshow</span><span class="p">(</span><span class="n">S_db</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">SR</span><span class="p">,</span> <span class="n">x_axis</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="n">y_axis</span><span class="o">=</span><span class="s1">&#39;mel&#39;</span><span class="p">,</span> <span class="n">fmax</span><span class="o">=</span><span class="mi">8000</span><span class="p">)</span>
+</code></pre></div>
+<p><img alt="Mel Spectrograms" src="images/mel_spectrograms.png" /></p>
+<p>The lower frequencies get more vertical space, which is where a lot of the interesting information lives.</p>
+<table>
+<thead>
+<tr>
+<th>Representation</th>
+<th>X axis</th>
+<th>Y axis</th>
+<th>Shows</th>
+<th>Used for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Waveform</td>
+<td>Time</td>
+<td>Amplitude</td>
+<td>When things happen</td>
+<td>Quick inspection, editing</td>
+</tr>
+<tr>
+<td>FFT Spectrum</td>
+<td>Frequency</td>
+<td>Amplitude</td>
+<td>What frequencies exist</td>
+<td>Single point analysis</td>
+</tr>
+<tr>
+<td>Spectrogram</td>
+<td>Time</td>
+<td>Frequency (linear)</td>
+<td>Frequencies over time</td>
+<td>Visualization, analysis</td>
+</tr>
+<tr>
+<td>Mel Spectrogram</td>
+<td>Time</td>
+<td>Frequency (mel scale)</td>
+<td>Perceptually weighted frequencies</td>
+<td><strong>ML model input</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="all-four-views-together">All four views together</h2>
+<p>Here's everything side by side for each sound. Waveform, FFT spectrum, spectrogram, mel spectrogram.</p>
+<p><img alt="Thunder all views" src="images/thunder_all_views.png" /></p>
+<p><img alt="Chimes all views" src="images/chimes_all_views.png" /></p>
+<hr />
+<h2 id="esc-50-an-environmental-sound-dataset">ESC 50: an environmental sound dataset</h2>
+<p>The HF course uses MINDS 14 (a speech dataset). Since we're doing soundscapes, I use <strong>ESC 50</strong> instead: 2,000 clips, 5 seconds each, 50 classes of environmental sounds. All originally from Freesound.org.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dataset</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;ashraq/esc50&quot;</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="all-50-categories">All 50 categories</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>airplane</td>
+<td>breathing</td>
+<td>brushing_teeth</td>
+<td>can_opening</td>
+<td>car_horn</td>
+</tr>
+<tr>
+<td>cat</td>
+<td>chainsaw</td>
+<td>chirping_birds</td>
+<td>church_bells</td>
+<td>clapping</td>
+</tr>
+<tr>
+<td>clock_alarm</td>
+<td>clock_tick</td>
+<td>coughing</td>
+<td>cow</td>
+<td>crackling_fire</td>
+</tr>
+<tr>
+<td>crickets</td>
+<td>crow</td>
+<td>crying_baby</td>
+<td>dog</td>
+<td>door_wood_creaks</td>
+</tr>
+<tr>
+<td>door_wood_knock</td>
+<td>drinking_sipping</td>
+<td>engine</td>
+<td>fireworks</td>
+<td>footsteps</td>
+</tr>
+<tr>
+<td>frog</td>
+<td>glass_breaking</td>
+<td>hand_saw</td>
+<td>helicopter</td>
+<td>hen</td>
+</tr>
+<tr>
+<td>insects</td>
+<td>keyboard_typing</td>
+<td>laughing</td>
+<td>mouse_click</td>
+<td>pig</td>
+</tr>
+<tr>
+<td>pouring_water</td>
+<td><strong>rain</strong></td>
+<td>rooster</td>
+<td><strong>sea_waves</strong></td>
+<td>sheep</td>
+</tr>
+<tr>
+<td>siren</td>
+<td>sneezing</td>
+<td>snoring</td>
+<td><strong>thunderstorm</strong></td>
+<td>toilet_flush</td>
+</tr>
+<tr>
+<td>train</td>
+<td>vacuum_cleaner</td>
+<td>washing_machine</td>
+<td>water_drops</td>
+<td><strong>wind</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The bold ones are the categories closest to our own sounds. Let's listen to a few:</p>
+<p><strong>🌧️ Rain (ESC 50)</strong>
+<audio controls>
+  <source src="audio/esc50_rain.mp3" type="audio/mpeg">
+  <source src="audio/esc50_rain.wav" type="audio/wav">
+</audio></p>
+<p><strong>⛈️ Thunderstorm (ESC 50)</strong>
+<audio controls>
+  <source src="audio/esc50_thunderstorm.mp3" type="audio/mpeg">
+  <source src="audio/esc50_thunderstorm.wav" type="audio/wav">
+</audio></p>
+<p><strong>🌊 Sea Waves (ESC 50)</strong>
+<audio controls>
+  <source src="audio/esc50_sea_waves.mp3" type="audio/mpeg">
+  <source src="audio/esc50_sea_waves.wav" type="audio/wav">
+</audio></p>
+<p><strong>🔔 Church Bells (ESC 50)</strong>
+<audio controls>
+  <source src="audio/esc50_church_bells.mp3" type="audio/mpeg">
+  <source src="audio/esc50_church_bells.wav" type="audio/wav">
+</audio></p>
+<p><strong>💨 Wind (ESC 50)</strong>
+<audio controls>
+  <source src="audio/esc50_wind.mp3" type="audio/mpeg">
+  <source src="audio/esc50_wind.wav" type="audio/wav">
+</audio></p>
+<h3 id="esc-50-rain-vs-our-thunder-recording">ESC 50 rain vs our thunder recording</h3>
+<p>How does a 5 second ESC 50 rain clip compare to our own 27 second field recording? Let's look at the mel spectrograms side by side:</p>
+<p><img alt="ESC 50 vs our sounds" src="images/esc50_vs_own.png" /></p>
+<hr />
+<h2 id="preprocessing-resampling-with-cast_column">Preprocessing: resampling with cast_column</h2>
+<p>ESC 50 audio is at 44.1 kHz. Most models expect 16 kHz. Instead of downloading and resampling manually, HF Datasets can resample on the fly:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">Audio</span>
+
+<span class="n">dataset_16k</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">cast_column</span><span class="p">(</span><span class="s2">&quot;audio&quot;</span><span class="p">,</span> <span class="n">Audio</span><span class="p">(</span><span class="n">sampling_rate</span><span class="o">=</span><span class="mi">16000</span><span class="p">))</span>
+</code></pre></div>
+<p><code>cast_column</code> doesn't resample everything at once. It happens only when you access each example. Important for large datasets where you don't want to process millions of files upfront.</p>
+<hr />
+<h2 id="feature-extraction-with-whisper">Feature extraction with Whisper</h2>
+<p>ML models don't accept raw audio arrays. They need input features, typically a log mel spectrogram with specific parameters. Each model has its own feature extractor that knows exactly how to transform the audio. Whisper expects 30 second chunks (padded if shorter), 80 mel bins, 16 kHz sample rate.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">WhisperFeatureExtractor</span>
+
+<span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">WhisperFeatureExtractor</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;openai/whisper-small&quot;</span><span class="p">)</span>
+<span class="n">inputs</span> <span class="o">=</span> <span class="n">feature_extractor</span><span class="p">(</span><span class="n">thunder</span><span class="p">,</span> <span class="n">sampling_rate</span><span class="o">=</span><span class="n">SR</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;np&quot;</span><span class="p">)</span>
+<span class="c1"># Shape: (1, 80, 3000) → batch=1, mel_bins=80, time_frames=3000</span>
+</code></pre></div>
+<p>This is literally what Whisper "sees":</p>
+<p><img alt="Whisper features" src="images/whisper_features.png" /></p>
+<p>80 mel bins, 3000 time frames (30 seconds). Shorter audio is zero padded on the right. You can apply this to a whole dataset with <code>map</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">prepare_dataset</span><span class="p">(</span><span class="n">example</span><span class="p">):</span>
+    <span class="n">audio</span> <span class="o">=</span> <span class="n">example</span><span class="p">[</span><span class="s2">&quot;audio&quot;</span><span class="p">]</span>
+    <span class="n">features</span> <span class="o">=</span> <span class="n">feature_extractor</span><span class="p">(</span>
+        <span class="n">audio</span><span class="p">[</span><span class="s2">&quot;array&quot;</span><span class="p">],</span>
+        <span class="n">sampling_rate</span><span class="o">=</span><span class="n">audio</span><span class="p">[</span><span class="s2">&quot;sampling_rate&quot;</span><span class="p">],</span>
+        <span class="n">padding</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">features</span>
+
+<span class="n">dataset_processed</span> <span class="o">=</span> <span class="n">dataset_16k</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">prepare_dataset</span><span class="p">)</span>
+</code></pre></div>
+<p>For models like Whisper that handle both audio input and text output, HF provides an <code>AutoProcessor</code> that bundles the feature extractor with a tokenizer:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoProcessor</span>
+
+<span class="n">processor</span> <span class="o">=</span> <span class="n">AutoProcessor</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;openai/whisper-small&quot;</span><span class="p">)</span>
+<span class="c1"># processor.feature_extractor → WhisperFeatureExtractor</span>
+<span class="c1"># processor.tokenizer → WhisperTokenizer</span>
+</code></pre></div>
+<hr />
+<h2 id="streaming">Streaming</h2>
+<p>Audio datasets can be enormous. GigaSpeech is over 1 TB. Streaming mode loads examples one at a time, on the fly, no disk space needed. The trade off: you can't index by position (<code>dataset[42]</code>), you can only iterate.</p>
+<div class="highlight"><pre><span></span><code><span class="n">esc50_stream</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;ashraq/esc50&quot;</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="n">streaming</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Can&#39;t do esc50_stream[0], must iterate</span>
+<span class="n">first</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">esc50_stream</span><span class="p">))</span>
+
+<span class="c1"># take() grabs the first N examples</span>
+<span class="k">for</span> <span class="n">example</span> <span class="ow">in</span> <span class="n">esc50_stream</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">example</span><span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">],</span> <span class="n">example</span><span class="p">[</span><span class="s1">&#39;audio&#39;</span><span class="p">][</span><span class="s1">&#39;sampling_rate&#39;</span><span class="p">])</span>
+
+<span class="c1"># Resample streamed data on the fly too</span>
+<span class="n">esc50_stream_16k</span> <span class="o">=</span> <span class="n">esc50_stream</span><span class="o">.</span><span class="n">cast_column</span><span class="p">(</span><span class="s2">&quot;audio&quot;</span><span class="p">,</span> <span class="n">Audio</span><span class="p">(</span><span class="n">sampling_rate</span><span class="o">=</span><span class="mi">16000</span><span class="p">))</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Use streaming?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dataset fits on disk, you'll reuse it</td>
+<td>❌ Download once</td>
+</tr>
+<tr>
+<td>Dataset is huge (100+ GB)</td>
+<td>✅ Stream</td>
+</tr>
+<tr>
+<td>Quick experiment, just need a few examples</td>
+<td>✅ Stream</td>
+</tr>
+<tr>
+<td>Evaluating on many datasets sequentially</td>
+<td>✅ Stream</td>
+</tr>
+</tbody>
+</table>
+<p>For ESC 50 (~600 MB), streaming is optional. For AudioSet (~2M clips), it's essential.</p>
+<hr />
+<h2 id="what-i-learned">What I learned</h2>
+<p>The key insight from comparing thunder/rain and chimes: they look very different in the frequency domain. Broadband noise vs clear tonal peaks. This is exactly what ML models exploit for classification. The mel spectrogram is the most common input representation because it captures frequency information on a perceptually meaningful scale.</p>
+<p>The whole pipeline goes: raw audio → resample to 16 kHz → feature extractor → log mel spectrogram → model. Understanding each step makes everything that comes next in the course make more sense.</p>
+<p>📓 <strong><a href="https://github.com/my-sonicase/learn-gen-AI-audio/blob/main/notebooks/chapter1_audio_fundamentals.ipynb">Full notebook with all the code</a></strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tabs", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

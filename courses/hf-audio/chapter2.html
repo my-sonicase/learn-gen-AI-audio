@@ -1,0 +1,1506 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A learning lab where I build, break, and explore generative AI applied to sound, music, and audio.">
+      
+      
+      
+        <link rel="canonical" href="https://my-sonicase.github.io/learn-gen-AI-audio/courses/hf-audio/chapter2.html">
+      
+      
+        <link rel="prev" href="chapter1.html">
+      
+      
+        <link rel="next" href="chapter3.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+    
+    
+      
+        <title>Chapter 2: Audio Applications with Pipelines - How to Learn AI for Audio & Sound</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-2-audio-applications-with-pipelines" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="How to Learn AI for Audio &amp; Sound" class="md-header__button md-logo" aria-label="How to Learn AI for Audio & Sound" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m22 12-2 1-1 1-1-1-1 3-1-3-1 8-1-8-1 2-1-2-1 4-1-4-1 9-1-9-1 6-1-6-1 1-1-1-2-1 2-1 1-1 1 1 1-6 1 6 1-9 1 9 1-4 1 4 1-2 1 2 1-8 1 8 1-3 1 3 1-1 1 1z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            How to Learn AI for Audio & Sound
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter 2: Audio Applications with Pipelines
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../index.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  🔊 How to Learn AI for Audio &amp; Sound
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../deeplearning-ai.html" class="md-tabs__link">
+          
+  
+  
+  Courses
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="How to Learn AI for Audio &amp; Sound" class="md-nav__button md-logo" aria-label="How to Learn AI for Audio & Sound" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m22 12-2 1-1 1-1-1-1 3-1-3-1 8-1-8-1 2-1-2-1 4-1-4-1 9-1-9-1 6-1-6-1 1-1-1-2-1 2-1 1-1 1 1 1-6 1 6 1-9 1 9 1-4 1 4 1-2 1 2 1-8 1 8 1-3 1 3 1-1 1 1z"/></svg>
+
+    </a>
+    How to Learn AI for Audio & Sound
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔊 How to Learn AI for Audio &amp; Sound
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Courses
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Courses
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deeplearning-ai.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📐 Andrew Ng · Deep Learning Specialization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fastai.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🚀 fast.ai · Practical Deep Learning for Coders
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gen-audio.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🌊 Generative Audio Experiments
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../karpathy.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🧪 Karpathy · Neural Networks: Zero to Hero
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hf audio
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Hf audio
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🤗 Hugging Face Audio Course
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="chapter1.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 1: Working with Audio Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 2: Audio Applications with Pipelines
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="chapter2.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 2: Audio Applications with Pipelines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#part-1-audio-classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 1: Audio Classification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 1: Audio Classification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#classify-esc-50-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Classify ESC 50 examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#classify-our-own-sounds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Classify our own sounds
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#under-the-hood" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Under the hood
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-2-audio-captioning-instead-of-asr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 2: Audio Captioning (instead of ASR)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 2: Audio Captioning (instead of ASR)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#caption-our-own-sounds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Caption our own sounds
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#caption-esc-50-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Caption ESC 50 examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asr-vs-audio-captioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ASR vs Audio Captioning
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-3-audio-generation-with-musicgen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 3: Audio Generation with MusicGen
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 3: Audio Generation with MusicGen">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generate-soundscapes-from-text" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generate soundscapes from text
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#real-recording-vs-generated" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Real recording vs generated
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-full-loop-audio-text-audio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The full loop: Audio → Text → Audio
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-i-learned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What I learned
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="chapter3.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 3: Inside Audio Transformers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="chapter4.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 4: Fine Tuning Audio Classifiers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#part-1-audio-classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 1: Audio Classification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 1: Audio Classification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#classify-esc-50-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Classify ESC 50 examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#classify-our-own-sounds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Classify our own sounds
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#under-the-hood" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Under the hood
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-2-audio-captioning-instead-of-asr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 2: Audio Captioning (instead of ASR)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 2: Audio Captioning (instead of ASR)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#caption-our-own-sounds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Caption our own sounds
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#caption-esc-50-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Caption ESC 50 examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asr-vs-audio-captioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ASR vs Audio Captioning
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-3-audio-generation-with-musicgen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 3: Audio Generation with MusicGen
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 3: Audio Generation with MusicGen">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generate-soundscapes-from-text" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generate soundscapes from text
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#real-recording-vs-generated" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Real recording vs generated
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-full-loop-audio-text-audio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The full loop: Audio → Text → Audio
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-i-learned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What I learned
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="chapter-2-audio-applications-with-pipelines">Chapter 2: Audio Applications with Pipelines</h1>
+<p class="hero-subtitle">
+Following the <a href="https://huggingface.co/learn/audio-course/en/chapter2/introduction">Hugging Face Audio Course, Unit 2</a>. The course shows three tasks: audio classification, ASR, and audio generation. I adapt all three to environmental sounds and soundscapes instead of speech. The key idea of this chapter: you can do a lot with pre-trained models and zero training.
+</p>
+
+<p>📓 <strong><a href="https://github.com/my-sonicase/learn-gen-AI-audio/blob/main/notebooks/chapter2_audio_applications.ipynb">Full notebook on GitHub</a></strong></p>
+<table>
+<thead>
+<tr>
+<th>HF Course</th>
+<th>My version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Audio Classification on MINDS 14 (speech intent)</td>
+<td>Audio Classification on <strong>ESC 50</strong> (environmental sounds)</td>
+</tr>
+<tr>
+<td>ASR with Whisper (speech to text)</td>
+<td><strong>Audio Captioning</strong> (sound to description)</td>
+</tr>
+<tr>
+<td>TTS with Bark + Music with MusicGen</td>
+<td><strong>Soundscape generation</strong> with MusicGen</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="part-1-audio-classification">Part 1: Audio Classification</h2>
+<p>Audio classification = give the model an audio clip, get back a label (or a ranked list of labels with scores). The HF course uses a model for speech intent classification. We use the <strong>Audio Spectrogram Transformer (AST)</strong> by MIT, trained on AudioSet (527 sound event classes).</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">pipeline</span>
+
+<span class="n">classifier</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span>
+    <span class="s2">&quot;audio-classification&quot;</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;MIT/ast-finetuned-audioset-10-10-0.4593&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+<h3 id="classify-esc-50-examples">Classify ESC 50 examples</h3>
+<p>Let's test it on sounds from the ESC 50 dataset. The model was trained on AudioSet which has different label names, so they won't match exactly. But the predictions should be semantically close.</p>
+<div class="highlight"><pre><span></span><code><span class="n">test_categories</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;rain&quot;</span><span class="p">,</span> <span class="s2">&quot;thunderstorm&quot;</span><span class="p">,</span> <span class="s2">&quot;church_bells&quot;</span><span class="p">,</span> <span class="s2">&quot;sea_waves&quot;</span><span class="p">,</span> <span class="s2">&quot;dog&quot;</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">cat</span> <span class="ow">in</span> <span class="n">test_categories</span><span class="p">:</span>
+    <span class="n">example</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;category&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">cat</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">audio_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">example</span><span class="p">[</span><span class="s2">&quot;audio&quot;</span><span class="p">][</span><span class="s2">&quot;array&quot;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">classifier</span><span class="p">(</span><span class="n">audio_array</span><span class="p">)</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>True label</th>
+<th>Top 1 prediction</th>
+<th>Score</th>
+<th>Top 2</th>
+<th>Score</th>
+<th>Top 3</th>
+<th>Score</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rain</td>
+<td>Rain</td>
+<td>0.396</td>
+<td>Rain on surface</td>
+<td>0.352</td>
+<td>Raindrop</td>
+<td>0.191</td>
+</tr>
+<tr>
+<td>thunderstorm</td>
+<td>Thunder</td>
+<td>0.548</td>
+<td>Thunderstorm</td>
+<td>0.254</td>
+<td>Rain</td>
+<td>0.109</td>
+</tr>
+<tr>
+<td>church_bells</td>
+<td>Church bell</td>
+<td>0.721</td>
+<td>Bell</td>
+<td>0.234</td>
+<td>Change ringing</td>
+<td>0.024</td>
+</tr>
+<tr>
+<td>sea_waves</td>
+<td>Waves, surf</td>
+<td>0.415</td>
+<td>Ocean</td>
+<td>0.310</td>
+<td>Wind</td>
+<td>0.058</td>
+</tr>
+<tr>
+<td>dog</td>
+<td>Bark</td>
+<td>0.192</td>
+<td>Animal</td>
+<td>0.184</td>
+<td>Dog</td>
+<td>0.108</td>
+</tr>
+</tbody>
+</table>
+<p>Pretty solid. The model has never seen ESC 50 data, yet it nails the semantics. Church bells is the most confident prediction. Dog is the weakest, probably because AudioSet has many fine grained animal categories.</p>
+<h3 id="classify-our-own-sounds">Classify our own sounds</h3>
+<p>Now our thunder and chimes recordings. The model has never seen these specific files.</p>
+<table>
+<thead>
+<tr>
+<th>Sound</th>
+<th>Top 1</th>
+<th>Score</th>
+<th>Top 2</th>
+<th>Score</th>
+<th>Top 3</th>
+<th>Score</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Thunder/Rain</td>
+<td>Thunder</td>
+<td>0.446</td>
+<td>Thunderstorm</td>
+<td>0.424</td>
+<td>Rain</td>
+<td>0.118</td>
+</tr>
+<tr>
+<td>Chimes</td>
+<td>Wind chime</td>
+<td>0.561</td>
+<td>Chime</td>
+<td>0.390</td>
+<td>Tubular bells</td>
+<td>0.016</td>
+</tr>
+</tbody>
+</table>
+<p>Both nailed. For thunder it can't decide between Thunder and Thunderstorm (makes sense, the recording has both). For chimes, Wind chime is the top prediction, which is exactly right.</p>
+<h3 id="under-the-hood">Under the hood</h3>
+<p>The <code>pipeline()</code> is convenient but hides what's happening. Here's the manual version:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoFeatureExtractor</span><span class="p">,</span> <span class="n">ASTForAudioClassification</span>
+
+<span class="n">model_id</span> <span class="o">=</span> <span class="s2">&quot;MIT/ast-finetuned-audioset-10-10-0.4593&quot;</span>
+<span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">AutoFeatureExtractor</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">model_id</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">ASTForAudioClassification</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">model_id</span><span class="p">)</span>
+
+<span class="c1"># Preprocess</span>
+<span class="n">clip</span> <span class="o">=</span> <span class="n">thunder</span><span class="p">[:</span><span class="n">SR</span> <span class="o">*</span> <span class="mi">10</span><span class="p">]</span>
+<span class="n">inputs</span> <span class="o">=</span> <span class="n">feature_extractor</span><span class="p">(</span><span class="n">clip</span><span class="p">,</span> <span class="n">sampling_rate</span><span class="o">=</span><span class="n">SR</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">)</span>
+<span class="c1"># Input shape: (1, 1024, 128)</span>
+
+<span class="c1"># Inference</span>
+<span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+    <span class="n">logits</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="o">**</span><span class="n">inputs</span><span class="p">)</span><span class="o">.</span><span class="n">logits</span>
+    <span class="n">probs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+<p>That's exactly what <code>pipeline()</code> does in one line. Good to understand, but use the pipeline in practice.</p>
+<hr />
+<h2 id="part-2-audio-captioning-instead-of-asr">Part 2: Audio Captioning (instead of ASR)</h2>
+<p>The HF course uses Whisper for ASR (speech to text). Since our sounds are not speech, we use a Whisper model fine tuned for <strong>audio captioning</strong>: it generates a free text description of what it hears.</p>
+<p>The model (<code>MU-NLPC/whisper-tiny-audio-captioning</code>) is a standard Whisper encoder decoder fine tuned on audio captioning data. The authors provide a custom model class, but it breaks with recent <code>transformers</code> versions. No problem: the weights are identical, so we load them with <code>WhisperForConditionalGeneration</code> and handle the style prefix ourselves.</p>
+<p>This is a useful lesson: <strong>when a custom class breaks, understand what it does and replicate it with standard tools.</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">WhisperForConditionalGeneration</span><span class="p">,</span> <span class="n">WhisperTokenizer</span><span class="p">,</span> <span class="n">WhisperFeatureExtractor</span>
+
+<span class="n">checkpoint</span> <span class="o">=</span> <span class="s2">&quot;MU-NLPC/whisper-tiny-audio-captioning&quot;</span>
+<span class="n">captioning_model</span> <span class="o">=</span> <span class="n">WhisperForConditionalGeneration</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">)</span>
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">WhisperTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">)</span>
+<span class="n">cap_feature_extractor</span> <span class="o">=</span> <span class="n">WhisperFeatureExtractor</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">)</span>
+</code></pre></div>
+<p>The model supports 3 captioning styles via a text prefix:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">caption_audio</span><span class="p">(</span><span class="n">audio_array</span><span class="p">,</span> <span class="n">sr</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;clotho &gt; caption: &quot;</span><span class="p">):</span>
+    <span class="n">features</span> <span class="o">=</span> <span class="n">cap_feature_extractor</span><span class="p">(</span><span class="n">audio_array</span><span class="p">,</span> <span class="n">sampling_rate</span><span class="o">=</span><span class="mi">16000</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">)</span>
+    <span class="n">prefix_ids</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="n">style</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">input_ids</span>
+    <span class="n">generated</span> <span class="o">=</span> <span class="n">captioning_model</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
+        <span class="n">features</span><span class="o">.</span><span class="n">input_features</span><span class="p">,</span>
+        <span class="n">decoder_input_ids</span><span class="o">=</span><span class="n">prefix_ids</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">generated</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">skip_special_tokens</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="caption-our-own-sounds">Caption our own sounds</h3>
+<table>
+<thead>
+<tr>
+<th>Sound</th>
+<th>Style</th>
+<th>Caption</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Thunder/Rain</td>
+<td>Natural (Clotho)</td>
+<td>A man is walking down the street with thunder in his hands</td>
+</tr>
+<tr>
+<td>Thunder/Rain</td>
+<td>Short (AudioCaps)</td>
+<td>Rain falling and th falling</td>
+</tr>
+<tr>
+<td>Thunder/Rain</td>
+<td>Keywords (AudioSet)</td>
+<td>natural, fire, natural, natural</td>
+</tr>
+<tr>
+<td>Chimes</td>
+<td>Natural (Clotho)</td>
+<td>A person is tapping a glass glass in a room</td>
+</tr>
+<tr>
+<td>Chimes</td>
+<td>Short (AudioCaps)</td>
+<td>A series of musical tones playing in a musical instrument</td>
+</tr>
+<tr>
+<td>Chimes</td>
+<td>Keywords (AudioSet)</td>
+<td>onomatopoeia, jingle, alarm</td>
+</tr>
+</tbody>
+</table>
+<p>The natural caption for thunder is hilariously wrong ("a man walking down the street with thunder in his hands") but the short caption and keywords get the gist. This is the <strong>tiny</strong> model (39M parameters). Larger variants produce significantly better captions but don't fit in Colab free tier.</p>
+<h3 id="caption-esc-50-examples">Caption ESC 50 examples</h3>
+<table>
+<thead>
+<tr>
+<th>True label</th>
+<th>Generated caption</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rain</td>
+<td>A large volume of water splashes as it flows</td>
+</tr>
+<tr>
+<td>thunderstorm</td>
+<td>Thunder rumbling in the distance</td>
+</tr>
+<tr>
+<td>sea_waves</td>
+<td>A large body of water</td>
+</tr>
+<tr>
+<td>church_bells</td>
+<td>Bells ringing in a church</td>
+</tr>
+<tr>
+<td>dog</td>
+<td>A dog barking</td>
+</tr>
+</tbody>
+</table>
+<p>Much better on the clean 5 second clips. The thunderstorm and church bells captions are surprisingly good for a tiny model.</p>
+<h3 id="asr-vs-audio-captioning">ASR vs Audio Captioning</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>ASR (Speech to Text)</th>
+<th>Audio Captioning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Input</strong></td>
+<td>Speech audio</td>
+<td>Any audio</td>
+</tr>
+<tr>
+<td><strong>Output</strong></td>
+<td>Exact transcription of words</td>
+<td>Free text description of sounds</td>
+</tr>
+<tr>
+<td><strong>Architecture</strong></td>
+<td>Encoder decoder (Whisper)</td>
+<td>Same encoder decoder (fine tuned Whisper)</td>
+</tr>
+<tr>
+<td><strong>Training data</strong></td>
+<td>Speech + transcription pairs</td>
+<td>Audio + description pairs</td>
+</tr>
+<tr>
+<td><strong>Use case</strong></td>
+<td>Subtitles, dictation, voice assistants</td>
+<td>Accessibility, search, metadata generation</td>
+</tr>
+</tbody>
+</table>
+<p>Same architecture, different training data, completely different task. That's the power of transfer learning.</p>
+<hr />
+<h2 id="part-3-audio-generation-with-musicgen">Part 3: Audio Generation with MusicGen</h2>
+<p>The HF course shows text to speech with Bark and music generation with MusicGen. Since we're doing soundscapes, we use <strong>MusicGen</strong> to generate environmental audio from text prompts.</p>
+<div class="highlight"><pre><span></span><code><span class="n">music_pipe</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span>
+    <span class="s2">&quot;text-to-audio&quot;</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;facebook/musicgen-small&quot;</span><span class="p">,</span>
+    <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+<h3 id="generate-soundscapes-from-text">Generate soundscapes from text</h3>
+<p>Three prompts, three generated sounds:</p>
+<p><strong>"Soft rain falling in a tropical forest with distant thunder and crickets"</strong>
+<audio controls>
+  <source src="audio/gen_rain_forest.mp3" type="audio/mpeg">
+</audio></p>
+<p><strong>"Gentle wind chimes ringing with different tones in a peaceful garden"</strong>
+<audio controls>
+  <source src="audio/gen_wind_chimes.mp3" type="audio/mpeg">
+</audio></p>
+<p><strong>"Ocean waves crashing on a rocky shore with seagulls"</strong>
+<audio controls>
+  <source src="audio/gen_ocean_waves.mp3" type="audio/mpeg">
+</audio></p>
+<p>MusicGen is primarily a music model, so it tends to interpret environmental prompts as "music inspired by" rather than literal soundscapes. Still interesting to hear how it translates text to audio.</p>
+<h3 id="real-recording-vs-generated">Real recording vs generated</h3>
+<p>How does our real thunder/rain field recording compare to what MusicGen generates from a similar prompt?</p>
+<p><strong>Real thunder/rain (first 10s):</strong>
+<audio controls>
+  <source src="audio/real_thunder_10s.mp3" type="audio/mpeg">
+</audio></p>
+<p><strong>Generated: "Soft rain falling in a tropical forest with distant thunder"</strong>
+<audio controls>
+  <source src="audio/gen_thunder_compare.mp3" type="audio/mpeg">
+</audio></p>
+<p>You can hear the difference immediately. The real recording has all the messy complexity of nature: layered rain, cicadas, irregular drips. The generated version is smoother, more "musical." This gap is exactly what models like AudioLDM and Stable Audio are trying to close.</p>
+<h3 id="the-full-loop-audio-text-audio">The full loop: Audio → Text → Audio</h3>
+<p>Here's something fun. Take a recording, caption it, then generate new audio from that caption. A full Audio → Text → Audio round trip.</p>
+<div class="highlight"><pre><span></span><code><span class="n">clip</span> <span class="o">=</span> <span class="n">thunder</span><span class="p">[:</span><span class="n">SR</span> <span class="o">*</span> <span class="mi">30</span><span class="p">]</span>
+<span class="n">caption</span> <span class="o">=</span> <span class="n">caption_audio</span><span class="p">(</span><span class="n">clip</span><span class="p">,</span> <span class="n">SR</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;audiocaps &gt; caption: &quot;</span><span class="p">)</span>
+<span class="c1"># → &quot;Rain falling and th falling&quot;</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">music_pipe</span><span class="p">(</span><span class="n">caption</span><span class="p">,</span> <span class="n">forward_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;max_new_tokens&quot;</span><span class="p">:</span> <span class="mi">512</span><span class="p">})</span>
+</code></pre></div>
+<p><strong>Original recording:</strong>
+<audio controls>
+  <source src="audio/loop_original.mp3" type="audio/mpeg">
+</audio></p>
+<p><strong>Caption generated:</strong> "Rain falling and th falling"</p>
+<p><strong>Regenerated from caption:</strong>
+<audio controls>
+  <source src="audio/loop_regenerated.mp3" type="audio/mpeg">
+</audio></p>
+<p>Information is lost at each step. The caption doesn't capture everything in the original, and MusicGen interprets the caption in its own way. Still, it's remarkable that this works at all with pre trained models and zero custom training.</p>
+<hr />
+<h2 id="what-i-learned">What I learned</h2>
+<p>Three <code>pipeline()</code> tasks, zero training, and we got surprisingly far:</p>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Model</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Audio Classification</td>
+<td><code>MIT/ast-finetuned-audioset</code></td>
+<td>Audio → label (e.g. "rain", "chime")</td>
+</tr>
+<tr>
+<td>Audio Captioning</td>
+<td><code>MU-NLPC/whisper-tiny-audio-captioning</code></td>
+<td>Audio → free text description</td>
+</tr>
+<tr>
+<td>Audio Generation</td>
+<td><code>facebook/musicgen-small</code></td>
+<td>Text → audio</td>
+</tr>
+</tbody>
+</table>
+<p><code>pipeline()</code> abstracts away all preprocessing. You give it raw audio, it gives you results. When there's no pipeline wrapper (like the captioning model), you load model, feature extractor, and tokenizer separately. Pre trained models get you surprisingly far, but they have blind spots. Fine tuning on your specific data (coming in later chapters) is what fixes that. And you can chain tasks together (caption → generate) for creative applications, even if information is lost at each step.</p>
+<p>📓 <strong><a href="https://github.com/my-sonicase/learn-gen-AI-audio/blob/main/notebooks/chapter2_audio_applications.ipynb">Full notebook with all the code</a></strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tabs", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

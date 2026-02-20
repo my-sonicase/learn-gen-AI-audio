@@ -1,0 +1,1351 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A learning lab where I build, break, and explore generative AI applied to sound, music, and audio.">
+      
+      
+      
+        <link rel="canonical" href="https://my-sonicase.github.io/learn-gen-AI-audio/courses/hf-audio/chapter4.html">
+      
+      
+        <link rel="prev" href="chapter3.html">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+    
+    
+      
+        <title>Chapter 4: Fine Tuning Audio Classifiers - How to Learn AI for Audio & Sound</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-4-fine-tuning-audio-classifiers" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="How to Learn AI for Audio &amp; Sound" class="md-header__button md-logo" aria-label="How to Learn AI for Audio & Sound" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m22 12-2 1-1 1-1-1-1 3-1-3-1 8-1-8-1 2-1-2-1 4-1-4-1 9-1-9-1 6-1-6-1 1-1-1-2-1 2-1 1-1 1 1 1-6 1 6 1-9 1 9 1-4 1 4 1-2 1 2 1-8 1 8 1-3 1 3 1-1 1 1z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            How to Learn AI for Audio & Sound
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter 4: Fine Tuning Audio Classifiers
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../index.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  🔊 How to Learn AI for Audio &amp; Sound
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../deeplearning-ai.html" class="md-tabs__link">
+          
+  
+  
+  Courses
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="How to Learn AI for Audio &amp; Sound" class="md-nav__button md-logo" aria-label="How to Learn AI for Audio & Sound" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m22 12-2 1-1 1-1-1-1 3-1-3-1 8-1-8-1 2-1-2-1 4-1-4-1 9-1-9-1 6-1-6-1 1-1-1-2-1 2-1 1-1 1 1 1-6 1 6 1-9 1 9 1-4 1 4 1-2 1 2 1-8 1 8 1-3 1 3 1-1 1 1z"/></svg>
+
+    </a>
+    How to Learn AI for Audio & Sound
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔊 How to Learn AI for Audio &amp; Sound
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Courses
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Courses
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deeplearning-ai.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📐 Andrew Ng · Deep Learning Specialization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fastai.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🚀 fast.ai · Practical Deep Learning for Coders
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gen-audio.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🌊 Generative Audio Experiments
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../karpathy.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🧪 Karpathy · Neural Networks: Zero to Hero
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hf audio
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Hf audio
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🤗 Hugging Face Audio Course
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="chapter1.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 1: Working with Audio Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="chapter2.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 2: Audio Applications with Pipelines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="chapter3.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 3: Inside Audio Transformers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 4: Fine Tuning Audio Classifiers
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="chapter4.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 4: Fine Tuning Audio Classifiers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#try-it-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-a-music-genre-classification-gtzan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part A: Music Genre Classification (GTZAN)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part A: Music Genre Classification (GTZAN)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#classify-our-music" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Classify our music
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#genre-predictions-over-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Genre predictions over time
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-b-environmental-sound-classification-esc-50" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part B: Environmental Sound Classification (ESC 50)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part B: Environmental Sound Classification (ESC 50)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prepare-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prepare data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fine-tune-distilhubert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fine tune DistilHuBERT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#evaluate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Evaluate
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-c-test-on-our-soundscape-recordings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part C: Test on Our Soundscape Recordings
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part C: Test on Our Soundscape Recordings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sliding-window-across-the-full-recordings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sliding window across the full recordings
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-i-learned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What I learned
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#try-it-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it yourself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-a-music-genre-classification-gtzan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part A: Music Genre Classification (GTZAN)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part A: Music Genre Classification (GTZAN)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#classify-our-music" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Classify our music
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#genre-predictions-over-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Genre predictions over time
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-b-environmental-sound-classification-esc-50" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part B: Environmental Sound Classification (ESC 50)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part B: Environmental Sound Classification (ESC 50)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prepare-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prepare data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fine-tune-distilhubert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fine tune DistilHuBERT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#evaluate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Evaluate
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-c-test-on-our-soundscape-recordings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part C: Test on Our Soundscape Recordings
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part C: Test on Our Soundscape Recordings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sliding-window-across-the-full-recordings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sliding window across the full recordings
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-i-learned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What I learned
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="chapter-4-fine-tuning-audio-classifiers">Chapter 4: Fine Tuning Audio Classifiers</h1>
+<p class="hero-subtitle">
+Following the <a href="https://huggingface.co/learn/audio-course/en/chapter4/introduction">Hugging Face Audio Course, Unit 4</a>. The course fine tunes DistilHuBERT on GTZAN for music genre classification. I do the same, then go further: train my own environmental sound classifier on ESC 50 and test it on our thunder and chimes field recordings. Same architecture, same pipeline, completely different tasks. Swap the dataset and labels, everything else stays the same.
+</p>
+
+<p>📓 <strong><a href="https://github.com/my-sonicase/learn-gen-AI-audio/blob/main/notebooks/chapter4_finetuning_classifiers.ipynb">Full notebook on GitHub</a></strong></p>
+<hr />
+<h2 id="try-it-yourself">Try it yourself</h2>
+<p>I deployed the ESC 50 classifier as a Gradio demo on Hugging Face Spaces. Record or upload any sound and see what the model thinks it is:</p>
+<p><iframe
+  src="https://sonicase-distilhubert-audio-classifier-demo.hf.space"
+  frameborder="0"
+  width="100%"
+  height="600"
+  style="border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);"
+></iframe>
+</p>
+<hr />
+<h2 id="part-a-music-genre-classification-gtzan">Part A: Music Genre Classification (GTZAN)</h2>
+<p>GTZAN is 999 songs, each 30 seconds, across 10 genres: blues, classical, country, disco, hiphop, jazz, metal, pop, reggae, rock. The HF course fine tunes DistilHuBERT on this. GTZAN's 30 second clips eat too much RAM for Colab free tier during preprocessing, so we load a pretrained checkpoint and test it on our own music.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">pipeline</span>
+
+<span class="n">pipe_gtzan</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span>
+    <span class="s2">&quot;audio-classification&quot;</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;sanchit-gandhi/distilhubert-finetuned-gtzan&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="c1"># 23.7M parameters, 10 genre labels</span>
+</code></pre></div>
+<h3 id="classify-our-music">Classify our music</h3>
+<p>I tested Bach (classical harpsichord, ~20 minutes) and a jazz recording (RainbowJazz, ~6 minutes). For each, I classify 5 second segments at the beginning, middle, and end.</p>
+<p>Bach gets classified as... <strong>hiphop</strong> (76.6% at the beginning). That's the model confidently being wrong. The harpsichord's rhythmic patterns apparently look like hip hop to DistilHuBERT. Some segments do get "classical" but it's inconsistent. The jazz recording does better, getting "jazz" more reliably.</p>
+<h3 id="genre-predictions-over-time">Genre predictions over time</h3>
+<p>Sliding a 5 second window across the first 60 seconds of each recording:</p>
+<p><img alt="Genre over time" src="images/genre_over_time.png" /></p>
+<p>The predictions jump around. Bach flips between hiphop, blues, and classical depending on the segment. This tells us something important: the model is sensitive to local texture, not long range structure. A 5 second window of harpsichord arpeggios might genuinely have rhythmic features that overlap with other genres.</p>
+<hr />
+<h2 id="part-b-environmental-sound-classification-esc-50">Part B: Environmental Sound Classification (ESC 50)</h2>
+<p>Now we train our own classifier from scratch on Colab. ESC 50 has 2000 clips (5 seconds each) across 50 categories:</p>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Animals</td>
+<td>dog, rooster, pig, cow, frog, cat, hen, insects, sheep, crow</td>
+</tr>
+<tr>
+<td>Natural soundscapes</td>
+<td>rain, sea waves, crackling fire, crickets, chirping birds, water drops, wind, thunderstorm</td>
+</tr>
+<tr>
+<td>Human (non speech)</td>
+<td>crying baby, sneezing, clapping, breathing, coughing, footsteps, laughing</td>
+</tr>
+<tr>
+<td>Interior/domestic</td>
+<td>door knock, mouse click, keyboard, washing machine, vacuum cleaner, clock alarm</td>
+</tr>
+<tr>
+<td>Exterior/urban</td>
+<td>helicopter, chainsaw, siren, car horn, engine, train, church bells, airplane</td>
+</tr>
+</tbody>
+</table>
+<p>Perfectly balanced: 40 clips per category. 5 second clips fit in Colab free tier.</p>
+<h3 id="prepare-data">Prepare data</h3>
+<p>ESC 50 comes with 5 predefined folds. Folds 1 through 4 for training (1600 clips), fold 5 for testing (400 clips).</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoFeatureExtractor</span>
+
+<span class="n">model_id</span> <span class="o">=</span> <span class="s2">&quot;ntu-spml/distilhubert&quot;</span>
+<span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">AutoFeatureExtractor</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span>
+    <span class="n">model_id</span><span class="p">,</span> <span class="n">do_normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_attention_mask</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+
+<span class="c1"># Resample to 16kHz, preprocess</span>
+<span class="n">esc_train</span> <span class="o">=</span> <span class="n">esc_train</span><span class="o">.</span><span class="n">cast_column</span><span class="p">(</span><span class="s2">&quot;audio&quot;</span><span class="p">,</span> <span class="n">HFAudio</span><span class="p">(</span><span class="n">sampling_rate</span><span class="o">=</span><span class="mi">16000</span><span class="p">))</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">preprocess_esc</span><span class="p">(</span><span class="n">examples</span><span class="p">):</span>
+    <span class="n">audio_arrays</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;array&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">examples</span><span class="p">[</span><span class="s2">&quot;audio&quot;</span><span class="p">]]</span>
+    <span class="n">inputs</span> <span class="o">=</span> <span class="n">feature_extractor</span><span class="p">(</span>
+        <span class="n">audio_arrays</span><span class="p">,</span> <span class="n">sampling_rate</span><span class="o">=</span><span class="mi">16000</span><span class="p">,</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="mi">16000</span> <span class="o">*</span> <span class="mf">5.0</span><span class="p">),</span> <span class="n">truncation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">return_attention_mask</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">inputs</span>
+
+<span class="n">esc_train_encoded</span> <span class="o">=</span> <span class="n">esc_train</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">preprocess_esc</span><span class="p">,</span> <span class="n">batched</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+<p>Each input: 80,000 samples (5.0s at 16 kHz), normalized to mean ~0 and variance ~1.</p>
+<h3 id="fine-tune-distilhubert">Fine tune DistilHuBERT</h3>
+<p>Same 23.7M parameter model as GTZAN, just with 50 output labels instead of 10.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoModelForAudioClassification</span><span class="p">,</span> <span class="n">TrainingArguments</span><span class="p">,</span> <span class="n">Trainer</span>
+
+<span class="n">model_esc</span> <span class="o">=</span> <span class="n">AutoModelForAudioClassification</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span>
+    <span class="s2">&quot;ntu-spml/distilhubert&quot;</span><span class="p">,</span>
+    <span class="n">num_labels</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+    <span class="n">label2id</span><span class="o">=</span><span class="n">esc_label2id</span><span class="p">,</span>
+    <span class="n">id2label</span><span class="o">=</span><span class="n">esc_id2label</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">training_args</span> <span class="o">=</span> <span class="n">TrainingArguments</span><span class="p">(</span>
+    <span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;distilhubert-finetuned-esc50&quot;</span><span class="p">,</span>
+    <span class="n">learning_rate</span><span class="o">=</span><span class="mf">5e-5</span><span class="p">,</span>
+    <span class="n">per_device_train_batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+    <span class="n">num_train_epochs</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">warmup_ratio</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">eval_strategy</span><span class="o">=</span><span class="s2">&quot;epoch&quot;</span><span class="p">,</span>
+    <span class="n">save_strategy</span><span class="o">=</span><span class="s2">&quot;epoch&quot;</span><span class="p">,</span>
+    <span class="n">load_best_model_at_end</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">metric_for_best_model</span><span class="o">=</span><span class="s2">&quot;accuracy&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>Training on Colab free tier (CPU, no GPU). 5 epochs, ~9 hours. Here's the training log:</p>
+<table>
+<thead>
+<tr>
+<th>Epoch</th>
+<th>Training Loss</th>
+<th>Validation Loss</th>
+<th>Accuracy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>3.610</td>
+<td>3.539</td>
+<td>16.8%</td>
+</tr>
+<tr>
+<td>2</td>
+<td>3.221</td>
+<td>3.175</td>
+<td>26.5%</td>
+</tr>
+<tr>
+<td>3</td>
+<td>3.014</td>
+<td>2.938</td>
+<td>38.5%</td>
+</tr>
+<tr>
+<td>4</td>
+<td>2.771</td>
+<td>2.807</td>
+<td>42.8%</td>
+</tr>
+<tr>
+<td>5</td>
+<td>2.676</td>
+<td>2.758</td>
+<td><strong>46.8%</strong></td>
+</tr>
+</tbody>
+</table>
+<p>46.8% accuracy on 50 classes. Random chance would be 2%, so the model is learning a lot. But 50 classes with only 40 examples each is tough. More epochs and GPU training would help.</p>
+<h3 id="evaluate">Evaluate</h3>
+<p>The confusion matrix shows where the model gets confused:</p>
+<p><img alt="Confusion matrix" src="images/confusion_matrix.png" /></p>
+<p>Best and worst categories:</p>
+<table>
+<thead>
+<tr>
+<th>Easiest (100%)</th>
+<th>Hardest (0%)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pouring_water</td>
+<td>can_opening</td>
+</tr>
+<tr>
+<td>sea_waves</td>
+<td>car_horn</td>
+</tr>
+<tr>
+<td></td>
+<td>coughing</td>
+</tr>
+<tr>
+<td></td>
+<td>engine</td>
+</tr>
+</tbody>
+</table>
+<p>Some categories with strong, distinctive spectral signatures (sea waves, pouring water) are easy. Short transient sounds (can opening, car horn) and sounds that overlap acoustically with other categories are the hardest.</p>
+<hr />
+<h2 id="part-c-test-on-our-soundscape-recordings">Part C: Test on Our Soundscape Recordings</h2>
+<p>The real test: does our ESC 50 model recognize thunder and chimes from our own field recordings? These are real world recordings, not clean 5 second clips.</p>
+<table>
+<thead>
+<tr>
+<th>Sound</th>
+<th>Top 1</th>
+<th>Score</th>
+<th>Top 2</th>
+<th>Score</th>
+<th>Top 3</th>
+<th>Score</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Thunder (Ubud)</td>
+<td>sea_waves</td>
+<td>7.5%</td>
+<td>washing_machine</td>
+<td>6.7%</td>
+<td>train</td>
+<td>6.7%</td>
+</tr>
+<tr>
+<td>Chimes (Georgia)</td>
+<td>sneezing</td>
+<td>8.5%</td>
+<td>cat</td>
+<td>7.4%</td>
+<td>rooster</td>
+<td>7.3%</td>
+</tr>
+</tbody>
+</table>
+<p>Not great. The model is confused because our recordings don't sound like the clean 5 second ESC 50 clips it was trained on. The thunder recording has layered rain, cicadas, and dripping, not just clean thunder. The chimes have silence between strikes, which the model hasn't learned to handle.</p>
+<h3 id="sliding-window-across-the-full-recordings">Sliding window across the full recordings</h3>
+<p>What happens when we slide a 5 second window across the entire recording?</p>
+<p><img alt="Sliding window" src="images/sliding_window.png" /></p>
+<p>The predictions jump around as the acoustic content changes. Thunder with heavy rain might get "rain" or "thunderstorm." During quiet moments it might flip to something unrelated. This is exactly what you'd expect from a model trained on isolated 5 second clips being tested on long, complex field recordings.</p>
+<hr />
+<h2 id="what-i-learned">What I learned</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>GTZAN (Music)</th>
+<th>ESC 50 (Environment)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td>Genre classification</td>
+<td>Sound classification</td>
+</tr>
+<tr>
+<td>Classes</td>
+<td>10 genres</td>
+<td>50 categories</td>
+</tr>
+<tr>
+<td>Data</td>
+<td>999 songs, 30s each</td>
+<td>2000 clips, 5s each</td>
+</tr>
+<tr>
+<td>Base model</td>
+<td>DistilHuBERT</td>
+<td>DistilHuBERT</td>
+</tr>
+<tr>
+<td>Tested on</td>
+<td>Bach, RainbowJazz</td>
+<td>Thunder, Chimes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Training data defines the model.</strong> The architecture is just the vessel. Same 23.7M parameter model, completely different capabilities depending on what you fine tune it on. Transfer learning works: a speech model (HuBERT, trained on LibriSpeech) adapts to music genres and environmental sounds. 50 classes is harder than 10, obviously, but even with limited data and CPU training you get meaningful results. And the sliding window analysis shows how predictions change as acoustic content evolves, which is something you don't see when you only test on clean isolated clips.</p>
+<p>📓 <strong><a href="https://github.com/my-sonicase/learn-gen-AI-audio/blob/main/notebooks/chapter4_finetuning_classifiers.ipynb">Full notebook with all the code</a></strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tabs", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

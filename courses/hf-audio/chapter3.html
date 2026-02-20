@@ -1,0 +1,1322 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A learning lab where I build, break, and explore generative AI applied to sound, music, and audio.">
+      
+      
+      
+        <link rel="canonical" href="https://my-sonicase.github.io/learn-gen-AI-audio/courses/hf-audio/chapter3.html">
+      
+      
+        <link rel="prev" href="chapter2.html">
+      
+      
+        <link rel="next" href="chapter4.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+    
+    
+      
+        <title>Chapter 3: Inside Audio Transformers - How to Learn AI for Audio & Sound</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-3-inside-audio-transformers" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="How to Learn AI for Audio &amp; Sound" class="md-header__button md-logo" aria-label="How to Learn AI for Audio & Sound" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m22 12-2 1-1 1-1-1-1 3-1-3-1 8-1-8-1 2-1-2-1 4-1-4-1 9-1-9-1 6-1-6-1 1-1-1-2-1 2-1 1-1 1 1 1-6 1 6 1-9 1 9 1-4 1 4 1-2 1 2 1-8 1 8 1-3 1 3 1-1 1 1z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            How to Learn AI for Audio & Sound
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter 3: Inside Audio Transformers
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../index.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  🔊 How to Learn AI for Audio &amp; Sound
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../deeplearning-ai.html" class="md-tabs__link">
+          
+  
+  
+  Courses
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="How to Learn AI for Audio &amp; Sound" class="md-nav__button md-logo" aria-label="How to Learn AI for Audio & Sound" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m22 12-2 1-1 1-1-1-1 3-1-3-1 8-1-8-1 2-1-2-1 4-1-4-1 9-1-9-1 6-1-6-1 1-1-1-2-1 2-1 1-1 1 1 1-6 1 6 1-9 1 9 1-4 1 4 1-2 1 2 1-8 1 8 1-3 1 3 1-1 1 1z"/></svg>
+
+    </a>
+    How to Learn AI for Audio & Sound
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔊 How to Learn AI for Audio &amp; Sound
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Courses
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Courses
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deeplearning-ai.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📐 Andrew Ng · Deep Learning Specialization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fastai.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🚀 fast.ai · Practical Deep Learning for Coders
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gen-audio.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🌊 Generative Audio Experiments
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../karpathy.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🧪 Karpathy · Neural Networks: Zero to Hero
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hf audio
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Hf audio
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🤗 Hugging Face Audio Course
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="chapter1.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 1: Working with Audio Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="chapter2.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 2: Audio Applications with Pipelines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 3: Inside Audio Transformers
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="chapter3.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 3: Inside Audio Transformers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#part-1-three-architectures-one-audio-clip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 1: Three Architectures, One Audio Clip
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 1: Three Architectures, One Audio Clip">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parameter-counts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameter counts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-each-model-sees-the-same-audio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How each model sees the same audio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-comes-out-hidden-states" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What comes out: hidden states
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hidden-states-as-heatmaps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hidden states as heatmaps
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-2-inside-whisper-encoder-vs-decoder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 2: Inside Whisper, Encoder vs Decoder
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-3-visualizing-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 3: Visualizing Attention
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 3: Visualizing Attention">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#encoder-self-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Encoder self attention
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#individual-attention-heads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Individual attention heads
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-attention-where-the-decoder-looks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross attention: where the decoder looks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#attention-over-the-spectrogram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attention over the spectrogram
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-i-learned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What I learned
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="chapter4.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 4: Fine Tuning Audio Classifiers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#part-1-three-architectures-one-audio-clip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 1: Three Architectures, One Audio Clip
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 1: Three Architectures, One Audio Clip">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parameter-counts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameter counts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-each-model-sees-the-same-audio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How each model sees the same audio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-comes-out-hidden-states" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What comes out: hidden states
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hidden-states-as-heatmaps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hidden states as heatmaps
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-2-inside-whisper-encoder-vs-decoder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 2: Inside Whisper, Encoder vs Decoder
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-3-visualizing-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 3: Visualizing Attention
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 3: Visualizing Attention">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#encoder-self-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Encoder self attention
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#individual-attention-heads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Individual attention heads
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-attention-where-the-decoder-looks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross attention: where the decoder looks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#attention-over-the-spectrogram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attention over the spectrogram
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-i-learned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What I learned
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="chapter-3-inside-audio-transformers">Chapter 3: Inside Audio Transformers</h1>
+<p class="hero-subtitle">
+Following the <a href="https://huggingface.co/learn/audio-course/en/chapter3/introduction">Hugging Face Audio Course, Unit 3</a>. The course chapter is pure theory: CTC vs Seq2Seq, encoder only vs encoder decoder, how audio enters a transformer. All essential, but no code. This notebook makes it tangible. We load Wav2Vec2, Whisper, and AST side by side, trace the data flow through each, and visualize the attention patterns on our thunder and chimes recordings.
+</p>
+
+<p>📓 <strong><a href="https://github.com/my-sonicase/learn-gen-AI-audio/blob/main/notebooks/chapter3_inside_audio_transformers.ipynb">Full notebook on GitHub</a></strong></p>
+<hr />
+<h2 id="part-1-three-architectures-one-audio-clip">Part 1: Three Architectures, One Audio Clip</h2>
+<p>The HF course describes three architecture families for audio:</p>
+<table>
+<thead>
+<tr>
+<th>Architecture</th>
+<th>Type</th>
+<th>Input</th>
+<th>Example</th>
+<th>Used for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CTC</td>
+<td>Encoder only</td>
+<td>Raw waveform</td>
+<td>Wav2Vec2</td>
+<td>ASR (speech to characters)</td>
+</tr>
+<tr>
+<td>Seq2Seq</td>
+<td>Encoder decoder</td>
+<td>Mel spectrogram</td>
+<td>Whisper</td>
+<td>ASR, captioning, translation</td>
+</tr>
+<tr>
+<td>Classification</td>
+<td>Encoder only</td>
+<td>Spectrogram patches</td>
+<td>AST</td>
+<td>Audio classification</td>
+</tr>
+</tbody>
+</table>
+<p>We load all three and feed them the same 5 second clips of thunder and chimes.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Wav2Vec2Model</span><span class="p">,</span> <span class="n">Wav2Vec2FeatureExtractor</span><span class="p">,</span>
+    <span class="n">WhisperModel</span><span class="p">,</span> <span class="n">WhisperFeatureExtractor</span><span class="p">,</span>
+    <span class="n">ASTModel</span><span class="p">,</span> <span class="n">AutoFeatureExtractor</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">w2v_model</span> <span class="o">=</span> <span class="n">Wav2Vec2Model</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;facebook/wav2vec2-base&quot;</span><span class="p">,</span> <span class="n">attn_implementation</span><span class="o">=</span><span class="s2">&quot;eager&quot;</span><span class="p">)</span>
+<span class="n">whisper_model</span> <span class="o">=</span> <span class="n">WhisperModel</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;openai/whisper-tiny&quot;</span><span class="p">,</span> <span class="n">attn_implementation</span><span class="o">=</span><span class="s2">&quot;eager&quot;</span><span class="p">)</span>
+<span class="n">ast_model</span> <span class="o">=</span> <span class="n">ASTModel</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;MIT/ast-finetuned-audioset-10-10-0.4593&quot;</span><span class="p">,</span> <span class="n">attn_implementation</span><span class="o">=</span><span class="s2">&quot;eager&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>We need <code>attn_implementation="eager"</code> to extract attention weights. The default <code>"sdpa"</code> is faster but doesn't support <code>output_attentions=True</code>.</p>
+<h3 id="parameter-counts">Parameter counts</h3>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Parameters</th>
+<th>Type</th>
+<th>Encoder layers</th>
+<th>Decoder layers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Wav2Vec2 base</td>
+<td>94.4M</td>
+<td>Encoder only</td>
+<td>12</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td>Whisper tiny</td>
+<td>37.8M</td>
+<td>Encoder decoder</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>AST</td>
+<td>86.2M</td>
+<td>Encoder only</td>
+<td>n/a (ViT)</td>
+<td>n/a</td>
+</tr>
+</tbody>
+</table>
+<h3 id="how-each-model-sees-the-same-audio">How each model sees the same audio</h3>
+<p>Each model preprocesses audio completely differently:</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Input format</th>
+<th>Shape (5s clip)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Wav2Vec2</td>
+<td>Raw waveform</td>
+<td>(1, 80000)</td>
+</tr>
+<tr>
+<td>Whisper</td>
+<td>Mel spectrogram</td>
+<td>(1, 80, 3000)</td>
+</tr>
+<tr>
+<td>AST</td>
+<td>Spectrogram patches</td>
+<td>(1, 1024, 128)</td>
+</tr>
+</tbody>
+</table>
+<p>Wav2Vec2 eats the raw samples directly. Whisper converts to a mel spectrogram first. AST chops the spectrogram into patches like a Vision Transformer. Same audio, three completely different representations before the model even starts.</p>
+<h3 id="what-comes-out-hidden-states">What comes out: hidden states</h3>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Output shape</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Wav2Vec2</td>
+<td>(1, 249, 768)</td>
+<td>249 time steps × 768d, one vector per ~20ms</td>
+</tr>
+<tr>
+<td>Whisper</td>
+<td>(1, 1500, 384)</td>
+<td>1500 time steps × 384d, the decoder cross attends to this</td>
+</tr>
+<tr>
+<td>AST</td>
+<td>(1, 1214, 768)</td>
+<td>1214 patches × 768d, pooled for classification</td>
+</tr>
+</tbody>
+</table>
+<h3 id="hidden-states-as-heatmaps">Hidden states as heatmaps</h3>
+<p>Thunder vs chimes, across all three architectures. We're looking at the first 128 dimensions of each model's output:</p>
+<p><img alt="Hidden state heatmaps" src="images/hidden_states_heatmaps.png" /></p>
+<p>Each model creates a completely different representation of the same audio. Wav2Vec2 is fine grained with many time steps, learned directly from the raw waveform. Whisper has coarser time resolution, derived from the mel spectrogram. AST is patch based, like a vision transformer looking at the spectrogram as an image. And the same model produces visibly different patterns for thunder vs chimes.</p>
+<hr />
+<h2 id="part-2-inside-whisper-encoder-vs-decoder">Part 2: Inside Whisper, Encoder vs Decoder</h2>
+<p>Whisper is the most interesting to explore because it has both an encoder and a decoder. The full data flow:</p>
+<div class="highlight"><pre><span></span><code>Raw audio (80,000 samples)
+  → Mel spectrogram (1, 80, 3000)  ← always padded to 30s
+    → Encoder → (1, 1500, 384)     ← 3000 frames / 2 from conv layers
+      → Decoder cross-attends to encoder output
+        → generates tokens one at a time
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Whisper-tiny architecture:&quot;</span><span class="p">)</span>
+<span class="c1"># Encoder: 4 layers, 6 heads, 384d</span>
+<span class="c1"># Decoder: 4 layers, 6 heads, 384d</span>
+<span class="c1"># Vocab size: 51865</span>
+<span class="c1"># Max source positions: 1500 (= 30s of audio)</span>
+<span class="c1"># Max target positions: 448 (= max tokens to generate)</span>
+</code></pre></div>
+<p>The encoder compresses 3000 mel frames down to 1500 time steps via two convolutional layers (stride 2). Each output step is a 384 dimensional vector representing about 20ms of audio. The decoder then cross attends to these 1500 encoder states when generating each output token.</p>
+<hr />
+<h2 id="part-3-visualizing-attention">Part 3: Visualizing Attention</h2>
+<p>This is the payoff. Two types of attention to look at: encoder self attention (how the model connects different parts of the audio) and cross attention (how the decoder "looks at" the audio when generating each token).</p>
+<h3 id="encoder-self-attention">Encoder self attention</h3>
+<p>We extract attention from all 4 encoder layers and visualize the first 200 time steps (~2.6 seconds):</p>
+<p><img alt="Encoder self attention" src="images/encoder_self_attention.png" /></p>
+<p>The pattern is clear: early layers attend mostly locally (the bright diagonal), while deeper layers develop broader, more global attention patterns. This makes sense. Low level features like frequency content are local, but higher level concepts like "this is rain" or "this is a chime strike" require connecting distant parts of the signal.</p>
+<h3 id="individual-attention-heads">Individual attention heads</h3>
+<p>Each head in the last encoder layer learns a different pattern:</p>
+<p><img alt="Individual attention heads" src="images/individual_attention_heads.png" /></p>
+<p>Some heads focus on local context (sharp diagonal), others attend broadly. Some seem to specialize in periodic patterns. This is the model distributing different aspects of audio understanding across its heads.</p>
+<h3 id="cross-attention-where-the-decoder-looks">Cross attention: where the decoder looks</h3>
+<p>When Whisper tries to "transcribe" our environmental sounds (it's a speech model, so it doesn't know what to do with rain and chimes), the cross attention shows where the decoder looks in the audio for each generated token.</p>
+<div class="highlight"><pre><span></span><code><span class="n">thunder_ca</span><span class="p">,</span> <span class="n">thunder_tokens</span><span class="p">,</span> <span class="n">thunder_text</span> <span class="o">=</span> <span class="n">get_cross_attention</span><span class="p">(</span><span class="n">thunder_10s</span><span class="p">)</span>
+<span class="n">chimes_ca</span><span class="p">,</span> <span class="n">chimes_tokens</span><span class="p">,</span> <span class="n">chimes_text</span> <span class="o">=</span> <span class="n">get_cross_attention</span><span class="p">(</span><span class="n">chimes_10s</span><span class="p">)</span>
+
+<span class="c1"># Thunder: Whisper heard &#39;.&#39;</span>
+<span class="c1"># Chimes: Whisper heard &#39; you&#39;</span>
+</code></pre></div>
+<p>Whisper generates almost nothing for both clips, just a period for thunder and "you" for chimes. It's a speech model confronted with non speech audio. But the cross attention is still revealing:</p>
+<p><img alt="Cross attention" src="images/cross_attention.png" /></p>
+<p>Even when Whisper has nothing meaningful to transcribe, the attention tells us which parts of the audio the model found "interesting." The special tokens (startoftranscript, en, transcribe, notimestamps) each attend to different parts of the audio as the model tries to figure out what it's hearing.</p>
+<h3 id="attention-over-the-spectrogram">Attention over the spectrogram</h3>
+<p>Here we overlay the total cross attention on top of the mel spectrogram for each sound:</p>
+<p><img alt="Attention over spectrogram" src="images/attention_over_spectrogram.png" /></p>
+<p>Thunder/rain has continuous energy spread across the clip, so attention is distributed broadly. Chimes have distinct transient events, and the attention profile reflects this. Whisper is a speech model trying to process environmental sounds, but the attention patterns still tell us what the model finds acoustically salient.</p>
+<hr />
+<h2 id="what-i-learned">What I learned</h2>
+<table>
+<thead>
+<tr>
+<th>What we explored</th>
+<th>What we learned</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3 architectures (Wav2Vec2, Whisper, AST)</td>
+<td>Same audio, completely different representations</td>
+</tr>
+<tr>
+<td>Input formats</td>
+<td>Raw waveform vs mel spectrogram vs spectrogram patches</td>
+</tr>
+<tr>
+<td>Encoder self attention</td>
+<td>Early layers = local, deeper layers = global</td>
+</tr>
+<tr>
+<td>Attention heads</td>
+<td>Each head specializes in a different pattern</td>
+</tr>
+<tr>
+<td>Cross attention</td>
+<td>Where the decoder "looks" when generating each token</td>
+</tr>
+<tr>
+<td>Attention + spectrogram</td>
+<td>Links attention to actual acoustic events</td>
+</tr>
+</tbody>
+</table>
+<p>The big takeaway: these models build up increasingly abstract representations of audio through their layers. The attention visualizations make the theory from the HF course concrete. You can actually see the model learning to connect distant parts of a rain recording, or focusing on the transient attacks of chimes.</p>
+<p>📓 <strong><a href="https://github.com/my-sonicase/learn-gen-AI-audio/blob/main/notebooks/chapter3_inside_audio_transformers.ipynb">Full notebook with all the code</a></strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tabs", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
