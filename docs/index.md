@@ -23,7 +23,7 @@ Each tile links to a page where I document what I'm learning, the code I write, 
 
 <div class="grid-cards">
 
-<a class="card foundational" href="courses/karpathy.html">
+<a class="card foundational" href="courses/karpathy/index.html">
   <span class="card-icon">🧪</span>
   <span class="tag foundational">Foundational</span>
   <h3>Karpathy · Neural Networks: Zero to Hero</h3>
