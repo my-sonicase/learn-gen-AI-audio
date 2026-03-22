@@ -23,21 +23,21 @@ Each tile links to a page where I document what I'm learning, the code I write, 
 
 <div class="grid-cards">
 
-<a class="card foundational" href="courses/karpathy/index.html">
+<a class="card foundational" href="./courses/karpathy/index.html">
   <span class="card-icon">🧪</span>
   <span class="tag foundational">Foundational</span>
   <h3>Karpathy · Neural Networks: Zero to Hero</h3>
   <p>Build GPT from scratch, character by character. The concepts (tokenization, embeddings, self attention, autoregressive generation) are exactly what powers MusicGen and AudioLM. Where I can, I swap text for audio tokens.</p>
 </a>
 
-<a class="card foundational" href="courses/fastai/">
+<a class="card foundational" href="./courses/fastai.html">
   <span class="card-icon">🚀</span>
   <span class="tag foundational">Foundational</span>
   <h3>fast.ai · Practical Deep Learning</h3>
   <p>Top down, code first deep learning. I take every lesson and rebuild the exercises around audio spectrograms, waveform classification, and sound generation.</p>
 </a>
 
-<a class="card foundational" href="courses/deeplearning-ai/">
+<a class="card foundational" href="./courses/deeplearning-ai.html">
   <span class="card-icon">📐</span>
   <span class="tag foundational">Foundational</span>
   <h3>Andrew Ng · Deep Learning Specialization</h3>
@@ -50,18 +50,11 @@ Each tile links to a page where I document what I'm learning, the code I write, 
 
 <div class="grid-cards">
 
-<a class="card applied" href="courses/hf-audio/">
+<a class="card applied" href="./courses/hf-audio/index.html">
   <span class="card-icon">🤗</span>
   <span class="tag applied">Applied · Audio</span>
   <h3>Hugging Face Audio Course</h3>
   <p>Hands on transformers for audio. Classification, generation, music tagging, working with audio datasets on the Hub.</p>
-</a>
-
-<a class="card applied" href="./courses/gen-music-ai/index.html">
-  <span class="card-icon">🎵</span>
-  <span class="tag applied">Applied · Audio</span>
-  <h3>Generative Music AI · Sound of AI</h3>
-  <p>Valerio Velardo's full course on generative music. From L Systems and Markov chains to Transformers, RAVE, and text to music diffusion. 22 lectures, all summarized.</p>
 </a>
 
 </div>
@@ -70,7 +63,7 @@ Each tile links to a page where I document what I'm learning, the code I write, 
 
 <div class="grid-cards">
 
-<a class="card generative" href="courses/gen-audio/">
+<a class="card generative" href="./courses/gen-audio.html">
   <span class="card-icon">🌊</span>
   <span class="tag generative">Generative</span>
   <h3>Generative Audio Experiments</h3>
@@ -83,7 +76,7 @@ Each tile links to a page where I document what I'm learning, the code I write, 
 
 <div class="grid-cards">
 
-<a class="card research" href="papers/">
+<a class="card research" href="./papers/index.html">
   <span class="card-icon">🔬</span>
   <span class="tag research">Research</span>
   <h3>Paper Implementations</h3>
