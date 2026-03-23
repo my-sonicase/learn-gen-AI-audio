@@ -21,7 +21,7 @@
 Before diving into the code, try the real AF3 model. Upload any audio and ask a question about it:
 
 <iframe
-  src="https://sonicase-audio-flamingo-3.hf.space"
+  src="https://huggingface.co/spaces/sonicase/audio-flamingo-3"
   frameborder="0"
   width="100%"
   height="700"
