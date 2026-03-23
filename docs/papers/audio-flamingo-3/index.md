@@ -12,6 +12,22 @@
 [Module 5](https://github.com/my-sonicase/learn-gen-AI-audio/blob/main/notebooks/module5_training.ipynb) ·
 [Module 6](https://github.com/my-sonicase/learn-gen-AI-audio/blob/main/notebooks/module6_af3_extras.ipynb)
 
+
+
+---
+
+## Try it
+
+Before diving into the code, try the real AF3 model. Upload any audio and ask a question about it:
+
+<iframe
+  src="https://sonicase-audio-flamingo-3.hf.space"
+  frameborder="0"
+  width="100%"
+  height="700"
+  style="border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);"
+></iframe>
+
 ---
 
 ## What is Audio Flamingo 3?
