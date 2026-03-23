@@ -1,0 +1,1770 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A learning lab where I build, break, and explore generative AI applied to sound, music, and audio.">
+      
+      
+      
+        <link rel="canonical" href="https://my-sonicase.github.io/learn-gen-AI-audio/papers/audio-flamingo-3/index.html">
+      
+      
+        <link rel="prev" href="../index.html">
+      
+      
+        <link rel="next" href="../../previous%20index/index.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Building Audio Flamingo 3 from Scratch - How to Learn AI for Audio & Sound</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#building-audio-flamingo-3-from-scratch" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="How to Learn AI for Audio &amp; Sound" class="md-header__button md-logo" aria-label="How to Learn AI for Audio & Sound" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m22 12-2 1-1 1-1-1-1 3-1-3-1 8-1-8-1 2-1-2-1 4-1-4-1 9-1-9-1 6-1-6-1 1-1-1-2-1 2-1 1-1 1 1 1-6 1 6 1-9 1 9 1-4 1 4 1-2 1 2 1-8 1 8 1-3 1 3 1-1 1 1z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            How to Learn AI for Audio & Sound
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Building Audio Flamingo 3 from Scratch
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../index.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  🔊 How to Learn AI for Audio &amp; Sound
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../courses/deeplearning-ai.html" class="md-tabs__link">
+          
+  
+  
+  Courses
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../index.html" class="md-tabs__link">
+          
+  
+  
+  Papers
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../previous%20index/index.html" class="md-tabs__link">
+          
+  
+  
+  Previous index
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="How to Learn AI for Audio &amp; Sound" class="md-nav__button md-logo" aria-label="How to Learn AI for Audio & Sound" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m22 12-2 1-1 1-1-1-1 3-1-3-1 8-1-8-1 2-1-2-1 4-1-4-1 9-1-9-1 6-1-6-1 1-1-1-2-1 2-1 1-1 1 1 1-6 1 6 1-9 1 9 1-4 1 4 1-2 1 2 1-8 1 8 1-3 1 3 1-1 1 1z"/></svg>
+
+    </a>
+    How to Learn AI for Audio & Sound
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔊 How to Learn AI for Audio &amp; Sound
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Courses
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Courses
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../courses/deeplearning-ai.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📐 Andrew Ng · Deep Learning Specialization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../courses/fastai.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🚀 fast.ai · Practical Deep Learning for Coders
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../courses/gen-audio.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🌊 Generative Audio Experiments
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gen music ai
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gen music ai
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../courses/gen-music-ai/index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🎵 Generative Music AI — Course Notes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hf audio
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Hf audio
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../courses/hf-audio/index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🤗 Hugging Face Audio Course
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../courses/hf-audio/chapter1.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 1: Working with Audio Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../courses/hf-audio/chapter2.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 2: Audio Applications with Pipelines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../courses/hf-audio/chapter3.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 3: Inside Audio Transformers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../courses/hf-audio/chapter4.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter 4: Fine Tuning Audio Classifiers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_6" id="__nav_2_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Karpathy
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Karpathy
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../courses/karpathy/index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🧪 Karpathy · Neural Networks: Zero to Hero
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../courses/karpathy/lecture1.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lecture 1: Micrograd — Backpropagation from Scratch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Papers
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Papers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📄 Paper Implementations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audio flamingo 3
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Audio flamingo 3
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Building Audio Flamingo 3 from Scratch
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="index.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Building Audio Flamingo 3 from Scratch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#try-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-audio-flamingo-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is Audio Flamingo 3?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#module-1-the-audio-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Module 1: The Audio Stack
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#module-2-af-whisper-encoder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Module 2: AF Whisper Encoder
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#module-3-clap-contrastive-language-audio-pretraining" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Module 3: CLAP (Contrastive Language Audio Pretraining)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#module-4-the-llava-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Module 4: The LLaVA Pattern
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Module 4: The LLaVA Pattern">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-5-stage-training-curriculum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The 5 stage training curriculum
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#module-5-training-nanoaf3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Module 5: Training NanoAF3
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#module-6-what-af3-adds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Module 6: What AF3 Adds
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Module 6: What AF3 Adds">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sliding-window-for-long-audio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sliding window for long audio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#af-think-chain-of-thought-reasoning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AF Think: chain of thought reasoning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#af-chat-multi-turn-dialogue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AF Chat: multi turn dialogue
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-full-picture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The full picture
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-i-learned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What I learned
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Previous index
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Previous index
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../previous%20index/index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔊 How to Learn AI for Audio &amp; Sound
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#try-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-audio-flamingo-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is Audio Flamingo 3?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#module-1-the-audio-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Module 1: The Audio Stack
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#module-2-af-whisper-encoder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Module 2: AF Whisper Encoder
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#module-3-clap-contrastive-language-audio-pretraining" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Module 3: CLAP (Contrastive Language Audio Pretraining)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#module-4-the-llava-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Module 4: The LLaVA Pattern
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Module 4: The LLaVA Pattern">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-5-stage-training-curriculum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The 5 stage training curriculum
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#module-5-training-nanoaf3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Module 5: Training NanoAF3
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#module-6-what-af3-adds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Module 6: What AF3 Adds
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Module 6: What AF3 Adds">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sliding-window-for-long-audio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sliding window for long audio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#af-think-chain-of-thought-reasoning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AF Think: chain of thought reasoning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#af-chat-multi-turn-dialogue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AF Chat: multi turn dialogue
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-full-picture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The full picture
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-i-learned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What I learned
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="building-audio-flamingo-3-from-scratch">Building Audio Flamingo 3 from Scratch</h1>
+<p class="hero-subtitle">
+<a href="https://arxiv.org/abs/2502.02026">Audio Flamingo 3</a> (NeurIPS 2025 Spotlight, NVIDIA) is an audio language model that listens to audio and answers questions about it. I rebuilt it from scratch in 6 modules, ~850 lines of pure PyTorch, all running on CPU. No pretrained weights, no HuggingFace. Every component is the real thing, just smaller. Here's what I learned.
+</p>
+
+<p>📓 <strong>Notebooks on GitHub:</strong>
+<a href="https://github.com/my-sonicase/learn-gen-AI-audio/blob/main/notebooks/module1_audio_stack.ipynb">Module 1</a> ·
+<a href="https://github.com/my-sonicase/learn-gen-AI-audio/blob/main/notebooks/module2_afwhisper_encoder.ipynb">Module 2</a> ·
+<a href="https://github.com/my-sonicase/learn-gen-AI-audio/blob/main/notebooks/module3_clap.ipynb">Module 3</a> ·
+<a href="https://github.com/my-sonicase/learn-gen-AI-audio/blob/main/notebooks/module4_llava_pattern.ipynb">Module 4</a> ·
+<a href="https://github.com/my-sonicase/learn-gen-AI-audio/blob/main/notebooks/module5_training.ipynb">Module 5</a> ·
+<a href="https://github.com/my-sonicase/learn-gen-AI-audio/blob/main/notebooks/module6_af3_extras.ipynb">Module 6</a></p>
+<hr />
+<h2 id="try-it">Try it</h2>
+<p>Before diving into the code, try the real AF3 model. Upload any audio and ask a question about it:</p>
+<p><iframe
+  src="https://sonicase-audio-flamingo-3.hf.space"
+  frameborder="0"
+  width="100%"
+  height="700"
+  allow="microphone; camera"
+  style="border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);"
+></iframe>
+</p>
+<hr />
+<h2 id="what-is-audio-flamingo-3">What is Audio Flamingo 3?</h2>
+<p>AF3 takes audio (up to 10 minutes) and a text question, and generates a text answer. "What instrument is playing?" → "A piano, playing a melody in C major." It's built on three components: an audio encoder (AF Whisper, 637M params), a small projector MLP (~4M params), and a frozen LLM (Qwen 2.5 7B). The idea comes from LLaVA (vision language models): take a powerful pretrained encoder, project its outputs into the LLM's embedding space, and let the LLM reason about them.</p>
+<p>The architecture:</p>
+<div class="highlight"><pre><span></span><code>Raw audio → Log Mel Spectrogram → AF-Whisper Encoder → Audio Projector → LLM → Text answer
+            (Module 1)            (Module 2)           (Module 4)       (Module 4)
+</code></pre></div>
+<hr />
+<h2 id="module-1-the-audio-stack">Module 1: The Audio Stack</h2>
+<p>Before touching any neural network, you need to understand what the model actually sees. AF3 doesn't see waveforms. It sees log mel spectrograms: 2D images of sound where one axis is time, the other is frequency (on a perceptual scale), and color is energy.</p>
+<p>I built the entire pipeline from scratch. No librosa, no torchaudio. Just numpy.</p>
+<p><img alt="Waveform and chord" src="images/waveform_and_chord.png" /></p>
+<p>A chord made of three sine waves (A4, C#5, E5). The raw waveform is a mess of overlapping oscillations. You can't tell what frequencies are present just by looking at it.</p>
+<p>The Fourier Transform decomposes the signal into its frequency components. Three sharp peaks, exactly at 440 Hz, 554 Hz, and 659 Hz.</p>
+<p><img alt="FFT spectrum" src="images/fft_spectrum.png" /></p>
+<p>But the FFT gives you frequencies over the entire clip. Sound changes over time. The STFT (Short Time Fourier Transform) slides a window over the waveform and computes the FFT inside each window, giving you frequency content as a function of time.</p>
+<p><img alt="STFT spectrogram" src="images/stft_spectrogram.png" /></p>
+<p>The problem: the frequency axis is linear, but human hearing is logarithmic. We're much more sensitive to differences between 100 Hz and 200 Hz than between 7000 Hz and 7100 Hz. The mel scale fixes this by compressing high frequencies and expanding low ones.</p>
+<p><img alt="Mel filterbank" src="images/mel_filterbank.png" /></p>
+<p>Finally, we apply a log transform (matching perceived loudness) and normalize. The result is the log mel spectrogram: an (80, T) tensor that is exactly what Whisper (and AF3) sees.</p>
+<p><img alt="Log mel comparison" src="images/log_mel_comparison.png" /></p>
+<hr />
+<h2 id="module-2-af-whisper-encoder">Module 2: AF Whisper Encoder</h2>
+<p>The encoder takes the (80, 3000) log mel spectrogram and produces 1500 vectors of dimension 1280. These are the "audio tokens" that the LLM will reason about.</p>
+<p>The architecture: two convolutional layers (the "stem") that extract local features and downsample by 2x, then positional embeddings, then 32 transformer blocks with multi head self attention and feed forward networks.</p>
+<p>I built each piece from scratch: the conv stem, sinusoidal positional embeddings, multi head self attention, the feed forward network with GELU activation, and the full encoder. About 150 lines of pure PyTorch.</p>
+<p><img alt="Conv stem visualization" src="images/conv_stem_viz.png" /></p>
+<p>The conv stem does three things at once: local feature extraction (nearby frames are correlated), temporal downsampling (3000 frames → 1500, halving the compute for the LLM), and channel expansion (80 mel bins → 1280 dimensions).</p>
+<p><img alt="Positional embeddings" src="images/positional_embeddings.png" /></p>
+<p>Positional embeddings give the transformer a sense of time. Without them, self attention is permutation invariant: shuffle the frames and you get the same output. That's catastrophic for audio where timing is everything.</p>
+<p>The key difference between AF Whisper and vanilla Whisper: same architecture, different training. AF Whisper is retrained on 50M audio text pairs from scratch, while vanilla Whisper was trained on speech transcription. Same weights structure, completely different learned representations.</p>
+<hr />
+<h2 id="module-3-clap-contrastive-language-audio-pretraining">Module 3: CLAP (Contrastive Language Audio Pretraining)</h2>
+<p>Before connecting the encoder to the LLM, we need to understand how audio and language get aligned in the same embedding space. CLAP is the bridge.</p>
+<p>The idea: train an audio encoder and a text encoder so that matching pairs (audio + its description) end up near each other in embedding space, and non matching pairs end up far apart. The loss function is InfoNCE: treat each row of the similarity matrix as a classification problem where the diagonal entry is the correct class.</p>
+<p><img alt="CLAP geometry" src="images/clap_geometry.png" /></p>
+<p>I built a nano CLAP with 5 synthetic audio concepts (dog barking, rain, siren, bird chirping, low rumble), trained it with contrastive learning, and watched the embedding space organize itself.</p>
+<p><img alt="CLAP training progress" src="images/clap_training.png" /></p>
+<p>Before training, audio and text points are scattered randomly. After training, matching pairs cluster together. The similarity matrix's diagonal emerges clearly: matching pairs score high, everything else scores low.</p>
+<p><img alt="CLAP PCA" src="images/clap_pca.png" /></p>
+<p>The payoff: zero shot audio classification. Drop in any audio clip, compute its similarity to text descriptions, and the nearest text is the classification. No classification head needed.</p>
+<p><img alt="Zero shot classification" src="images/zero_shot_classification.png" /></p>
+<p>AF3 moved away from CLAP's global pooling to AF Whisper's per timestep embeddings. The reason: CLAP squashes all temporal information into one vector. AF Whisper preserves it as 1500 separate vectors, giving the LLM access to the full temporal structure.</p>
+<hr />
+<h2 id="module-4-the-llava-pattern">Module 4: The LLaVA Pattern</h2>
+<p>This is where everything comes together. The audio encoder produces (1500, 1280) embeddings. The LLM (Qwen 2.5 7B) expects input of dimension 3584. How do you bridge that gap?</p>
+<p>A 2 layer MLP projector. That's it. Applied independently to each of the 1500 time steps. This is the "adapter" or "connector" that translates from the audio world to the language world.</p>
+<p><img alt="Architecture diagram" src="images/architecture_diagram.png" /></p>
+<p>Inside the LLM, audio tokens and text tokens are indistinguishable. They're both just vectors of the same dimension. The sequence looks like:</p>
+<div class="highlight"><pre><span></span><code>[&lt;audio&gt; 🔊🔊🔊...🔊 &lt;/audio&gt; &quot;What is this sound?&quot;]
+ special  1500 audio tokens      text tokens
+ token    (from projector)       (from vocab table)
+</code></pre></div>
+<p>The LLM then autoregressively generates the answer, attending to all previous tokens, both audio and text.</p>
+<h3 id="the-5-stage-training-curriculum">The 5 stage training curriculum</h3>
+<p>AF3 doesn't train everything at once. It uses a 5 stage curriculum where each stage unfreezes more parameters and uses harder tasks. This is crucial for stability: if you train everything from random init simultaneously, the gradients from the LLM destroy the pretrained audio encoder.</p>
+<p><img alt="Training curriculum" src="images/training_curriculum.png" /></p>
+<p>Stage 1: projector only (encoder and LLM frozen). Stage 2: encoder + projector. Stage 3: everything. Stages 4 and 5: harder tasks (reasoning, chat).</p>
+<hr />
+<h2 id="module-5-training-nanoaf3">Module 5: Training NanoAF3</h2>
+<p>I built a complete training pipeline with 6 sound categories, 3 question types per category, and 8 augmentations per sample (144 training pairs total). The model goes from random noise to coherent audio descriptions in about 2 minutes on CPU.</p>
+<p><img alt="Dataset spectrograms" src="images/dataset_spectrograms.png" /></p>
+<p>The training follows the curriculum: Stage 1 warms up the projector (50 epochs), then Stage 2 unfreezes the encoder (150 epochs). Before training, the model outputs random characters. After training, it correctly identifies sound types and answers questions about them.</p>
+<p>The projector warmup is the keystone insight. Stage 1 exists because a randomly initialized projector feeds garbage to the LLM. You warm it up first so that by the time Stage 2 starts, the audio to language bridge is already functional.</p>
+<hr />
+<h2 id="module-6-what-af3-adds">Module 6: What AF3 Adds</h2>
+<p>Three things separate AF3 from a basic "encoder + LLM" demo.</p>
+<h3 id="sliding-window-for-long-audio">Sliding window for long audio</h3>
+<p>AF Whisper processes 30 second chunks. A 10 minute recording = 20 chunks = 30,000 audio tokens. That doesn't fit in any context window. AF3's solution: pool each chunk into a summary vector, then let the summaries attend to each other via cross chunk attention. You lose fine temporal detail within a chunk but keep the global structure.</p>
+<p><img alt="Chunk visualization" src="images/chunk_viz.png" /></p>
+<h3 id="af-think-chain-of-thought-reasoning">AF Think: chain of thought reasoning</h3>
+<p>Some audio questions require multi step reasoning. "Is the tempo faster or slower than 120 BPM?" needs tempo estimation then comparison. AF3 uses structured reasoning: <code>&lt;think&gt; step by step reasoning &lt;/think&gt; Answer: final answer</code>. The model learns to generate reasoning when the question is hard and skip it when it's easy. This is "on demand CoT."</p>
+<p><img alt="CoT loss" src="images/cot_loss.png" /></p>
+<h3 id="af-chat-multi-turn-dialogue">AF Chat: multi turn dialogue</h3>
+<p>Real users have conversations. The audio appears only in the first turn. For subsequent turns, audio tokens stay in the context window while text history grows. The model attends to the original audio tokens for every answer.</p>
+<p><img alt="Context growth" src="images/context_growth.png" /></p>
+<h3 id="the-full-picture">The full picture</h3>
+<p><img alt="Full architecture" src="images/full_architecture.png" /></p>
+<hr />
+<h2 id="what-i-learned">What I learned</h2>
+<table>
+<thead>
+<tr>
+<th>Module</th>
+<th>Topic</th>
+<th>Key build</th>
+<th>Lines</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Log Mel Spectrogram</td>
+<td>FFT → STFT → Mel → Log</td>
+<td>~50</td>
+</tr>
+<tr>
+<td>2</td>
+<td>AF Whisper Encoder</td>
+<td>ConvStem + PosEmb + Transformer</td>
+<td>~150</td>
+</tr>
+<tr>
+<td>3</td>
+<td>CLAP</td>
+<td>InfoNCE loss + zero shot classification</td>
+<td>~120</td>
+</tr>
+<tr>
+<td>4</td>
+<td>LLaVA Pattern</td>
+<td>Projector + NanoLLM + 5 stage curriculum</td>
+<td>~200</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Training</td>
+<td>Dataset + Stage 1→2 loop + generation</td>
+<td>~180</td>
+</tr>
+<tr>
+<td>6</td>
+<td>AF3 extras</td>
+<td>Sliding window + CoT + Chat</td>
+<td>~150</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td></td>
+<td></td>
+<td><strong>~850</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The biggest insight: multimodal AI is simpler than it looks. You don't need a new architecture. You need a pretrained encoder (AF Whisper), a pretrained LLM (Qwen), and a small MLP projector between them. The curriculum (what to freeze, what to train, in what order) matters more than the architecture itself.</p>
+<p>The projector is 0.05% of the total parameters but it's the single most important component to get right. Everything else is pretrained. The projector is the only thing that learns the audio to language translation from scratch.</p>
+<p>📓 <strong>Full notebooks:</strong>
+<a href="https://github.com/my-sonicase/learn-gen-AI-audio/blob/main/notebooks/module1_audio_stack.ipynb">Module 1</a> ·
+<a href="https://github.com/my-sonicase/learn-gen-AI-audio/blob/main/notebooks/module2_afwhisper_encoder.ipynb">Module 2</a> ·
+<a href="https://github.com/my-sonicase/learn-gen-AI-audio/blob/main/notebooks/module3_clap.ipynb">Module 3</a> ·
+<a href="https://github.com/my-sonicase/learn-gen-AI-audio/blob/main/notebooks/module4_llava_pattern.ipynb">Module 4</a> ·
+<a href="https://github.com/my-sonicase/learn-gen-AI-audio/blob/main/notebooks/module5_training.ipynb">Module 5</a> ·
+<a href="https://github.com/my-sonicase/learn-gen-AI-audio/blob/main/notebooks/module6_af3_extras.ipynb">Module 6</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tabs", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
