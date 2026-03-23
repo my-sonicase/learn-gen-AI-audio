@@ -21,10 +21,11 @@
 Before diving into the code, try the real AF3 model. Upload any audio and ask a question about it:
 
 <iframe
-  src="https://huggingface.co/spaces/sonicase/audio-flamingo-3"
+  src="https://sonicase-audio-flamingo-3.hf.space"
   frameborder="0"
   width="100%"
   height="700"
+  allow="microphone; camera"
   style="border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);"
 ></iframe>
 
